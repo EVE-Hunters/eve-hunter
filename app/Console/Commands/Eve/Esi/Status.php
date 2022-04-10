@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Console\Commands\Eve;
+namespace App\Console\Commands\Eve\Esi;
 
 use App\Job\Status\Esi;
 use Illuminate\Console\Command;
 
-class EsiStatus extends Command
+class Status extends Command
 {
 
     protected $signature = "eve:esi:status";

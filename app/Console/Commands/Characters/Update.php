@@ -9,7 +9,7 @@ use Illuminate\Console\Command;
 class Update extends Command
 {
 
-    protected $signature = 'bh:update-characters';
+    protected $signature = 'hunters:characters:update';
 
     public function handle(){
 

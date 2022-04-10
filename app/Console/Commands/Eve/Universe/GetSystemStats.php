@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Console\Commands\Eve;
+namespace App\Console\Commands\Eve\Universe;
 
 
 use App\Job\Universe\SystemJumps;
@@ -12,7 +12,7 @@ use Illuminate\Console\Command;
 class GetSystemStats extends Command
 {
 
-    protected $signature = 'bh:get-system-stats';
+    protected $signature = 'eve:universe:update-system-stats';
 
     public function handle()
     {

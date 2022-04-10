@@ -15,10 +15,17 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        // Get Status of ESI server
         $schedule->command('eve:esi:status')->everyMinute();
-        $schedule->command('bh:get-system-stats')->hourly();
-        $schedule->command('bh:update-characters')->everySixHours();
+
+        // Gets Universe Stats
+        $schedule->command('eve:universe:update-system-stats')->hourly();
+
+        //Clean up old stats
+        $schedule->command('eve:universe:cleanup-system-stats')->hourly();
+
+        //Update characters
+        $schedule->command('hunters:characters:update')->everySixHours();
     }
 
     /**
