@@ -19,7 +19,7 @@ class LocationController extends Controller
 
         $tokens = RefreshToken::query()->with('character')
             ->whereIn('character_id', $id)
-            ->where('user_id', auth()->user()->getKey())->get();
+            ->where('user_id', auth()->user()->id)->get();
 
         $tokens->each(function($token){
             CharacterLocation::dispatchSync($token, auth()->user());

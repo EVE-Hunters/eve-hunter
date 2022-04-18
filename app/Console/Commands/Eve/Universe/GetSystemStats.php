@@ -16,7 +16,7 @@ class GetSystemStats extends Command
 
     public function handle()
     {
-        SystemKills::dispatchSync();
-        SystemJumps::dispatchSync();
+        SystemKills::dispatch();
+        SystemJumps::dispatch();
     }
 }

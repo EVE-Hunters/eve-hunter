@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import Portal from "../Portal/Portal";
-import {HiPlus} from 'react-icons/hi'
+import { HiPlus } from '../Icons/HeroIcons/HiPlus';
+
 
 interface ModalInterface {
     activator: any

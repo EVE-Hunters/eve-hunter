@@ -1,5 +1,5 @@
 import React, {useRef, useState, useEffect} from 'react';
-import {useMapSettingsStore} from "../../../store";
+import { useMapSettingsStore } from '../../../stores/Map/MapSettingsStore';
 
 type meshElement = JSX.IntrinsicElements['mesh']
 

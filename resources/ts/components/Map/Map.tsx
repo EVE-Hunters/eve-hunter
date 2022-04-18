@@ -3,12 +3,13 @@ import {Canvas} from "@react-three/fiber";
 import EveMap from "./three/EveMap";
 import JumpRange from "./three/JumpRange";
 import ControlsProvider from "../../providers/Map/ControlsProvider";
-import {useHuntingLocationContext} from "../../hooks/Location/useHuntingLocationContext";
 import Skybox from "./three/Skybox";
-import {useMapSettingsStore} from "../../store";
+
 import HunterNotifications from "../HunterNotifications";
 import {useCharacters} from "../../hooks/useCharacters";
 import HuntingApi from "../../httpClient/HuntingApi";
+import { useMapStore } from '../../stores/Map/MapStore';
+import { useMapSettingsStore } from '../../stores/Map/MapSettingsStore';
 
 
 const Map: React.FC = () => {
@@ -22,12 +23,19 @@ const Map: React.FC = () => {
     const toggleJumps = useMapSettingsStore((state) => state.toggleJumps)
     const toggleSecurity = useMapSettingsStore((state) => state.toggleSecurity)
 
-    const {SourceSystem, nearBySystems, connections} = useHuntingLocationContext()
+    const {HuntingSystem, NearBySystems, Connections} = useMapStore((state) => ({
+        HuntingSystem: state.HuntingSystem,
+        NearBySystems: state.NearBySystems,
+        Connections: state.Connections
+    }));
+
+
+    //const {SourceSystem, nearBySystems, connections} = useHuntingLocationContext()
     const {huntingCharacters} = useCharacters()
 
     const SetDestinationHome = () => {
-        if(SourceSystem)
-            HuntingApi.setDestination(SourceSystem.system_id, huntingCharacters)
+        if(HuntingSystem)
+            HuntingApi.setDestination(HuntingSystem.system_id, huntingCharacters)
     }
 
 
@@ -75,21 +83,21 @@ const Map: React.FC = () => {
                         <Canvas
                             camera={{
                                 fov: 50,
-                                position: [SourceSystem?.x ?? 0, SourceSystem?.y ?? 0, SourceSystem?.z ?? 0]
+                                position: [HuntingSystem?.x ?? 0 + 1, HuntingSystem?.y ?? 0 + 1, HuntingSystem?.z ?? 0 + 1]
                             }}
                             dpr={[1, 2]}>
                             <ambientLight/>
 
                             <pointLight position={[10, 10, 10]}/>
                             <ControlsProvider>
-                                {SourceSystem && <EveMap SourceSystem={SourceSystem} connections={connections}
-                                                         nearBySystems={nearBySystems}/>}
+                                {HuntingSystem && <EveMap SourceSystem={HuntingSystem} connections={Connections}
+                                                         nearBySystems={NearBySystems}/>}
                                 <JumpRange position={[0, 0, 0]}/>
                             </ControlsProvider>
                             <Skybox/>
                         </Canvas>
                     </div>
-                    <div className="w-3/12 p-2">
+                    <div className="w-3/12">
                        <HunterNotifications />
                     </div>
                 </div>

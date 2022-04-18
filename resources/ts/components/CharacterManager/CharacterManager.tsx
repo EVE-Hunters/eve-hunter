@@ -1,10 +1,9 @@
 import React, {Fragment, useState} from 'react';
 import {useCharacters} from "../../hooks/useCharacters";
-import {useAuth} from "../../hooks/useAuth";
 import CharacterAvatar from '../CharacterAvatar';
-import {HiTrash, HiUpload} from "react-icons/hi";
-import DropdownMenu from "../DropdownMenu/DropdownMenu";
-import {HiDotsVertical} from 'react-icons/hi';
+import { HiTrash } from '../Icons/HeroIcons/HiTrash';
+import { HiUpload } from '../Icons/HeroIcons/HiUpload';
+import { HiDotsVertical } from '../Icons/HeroIcons/HiDotsVertical';
 import ConfirmRemoveCharacterModal from "./ConfirmRemoveCharacterModal";
 import {CharacterInterface} from '../../interfaces/User/CharacterInterface';
 import {Menu, Transition} from '@headlessui/react';
@@ -33,7 +32,7 @@ const CharacterManager: React.FC = () => {
 
                 <div className="bg-white px-2 py-1 rounded max-h-96">
 
-                    <div className="flex items-center px-2 py-1 my-2 border-b my-1">
+                    <div className="flex items-center px-2 py-1 my-2 border-b">
                         <div className="w-10 h-10">
                             <CharacterAvatar character={mainCharacter}/>
                         </div>

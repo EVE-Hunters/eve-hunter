@@ -1,9 +1,7 @@
-import {useThree} from '@react-three/fiber';
 import React, {useEffect, useRef} from 'react';
-import {useMapControls} from '../../../hooks/Map/useMapControls';
+import { useStatisticColors } from '../../../hooks/Map/useStatisticColors';
 import {MapRenderSettings, SolarSystemInterface} from "../../../interfaces/Map/MapInterfaces";
-import {CharacterInterface} from '../../../interfaces/User/CharacterInterface';
-import {useMapSettingsStore} from '../../../store';
+import { useMapSettingsStore } from '../../../stores/Map/MapSettingsStore';
 import {useCharacterLocations} from '../../../stores/UserLocationsStores';
 import HunterDisplay from "../HunterDisplay";
 
@@ -16,11 +14,13 @@ const SystemMapInfo: React.FC<SystemMapInfoInterface> = ({system}) => {
     //const inhabitants = useRef<CharacterInterface[]>(useCharacterLocations.getState().SolarSystemInhabitants[system.system_id] ?? []);
     const inhabitants = useCharacterLocations(state => state.SolarSystemInhabitants[system.system_id] ?? [])
     const renderSettings = useRef<MapRenderSettings>(useMapSettingsStore.getState().systemInfo)
+    const [npc_1h_color, npc_24h_color, npc_delta_color] = useStatisticColors(system);
 
 
     useEffect(() => {
         //useCharacterLocations.subscribe(state => (inhabitants.current = state.SolarSystemInhabitants[system.system_id] ?? []))
         useMapSettingsStore.subscribe(state => (renderSettings.current = state.systemInfo))
+
     }, [])
 
     let deltaColor: string = '';
@@ -41,13 +41,13 @@ const SystemMapInfo: React.FC<SystemMapInfoInterface> = ({system}) => {
 
     return (
         <div className="pl-8 pointer-events-none text-xs">
-            {renderSettings.current.delta && <div className={`text-right ${deltaColor}`}>
+            {renderSettings.current.delta && <div className={`text-right ${npc_delta_color}`}>
                 Delta: {system?.npc_delta}
             </div>}
-            {renderSettings.current.npc1h && <div className={`text-right ${npcColor}`}>
+            {renderSettings.current.npc1h && <div className={`text-right ${npc_1h_color}`}>
                 NPC (1H): {system.kill_stats_latest?.npc_kills}
             </div>}
-            {renderSettings.current.npc24h && <div className="text-right">
+            {renderSettings.current.npc24h && <div className={`text-right ${npc_24h_color}`}>
                 NPC (24H): {system?.npc_24h}
             </div>}
             {renderSettings.current.jumps && <div className="text-right">

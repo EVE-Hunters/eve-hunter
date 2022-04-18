@@ -1,7 +1,7 @@
 import {Popover, Transition} from '@headlessui/react';
 import React, {Fragment, useState} from 'react';
 import {useCharacterLocations} from "../../stores/UserLocationsStores";
-import {HiChevronDown, HiSave} from "react-icons/hi";
+import {HiChevronDown} from "../Icons/HeroIcons/HiChevronDown"
 
 interface HunterDisplayInterface {
     system_id: number,

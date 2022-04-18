@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
 import NavItem from "../NavItem/NavItem";
-import {HiHome, HiLogout, HiPaperAirplane, HiUser, HiUserAdd} from "react-icons/hi";
+import { HiHome } from '../../components/Icons/HeroIcons/HiHome';
+import { HiUser } from '../../components/Icons/HeroIcons/HiUser';
+import { HiLocationMarker } from '../../components/Icons/HeroIcons/HiLocationMarker';
+import { HiLogout } from '../../components/Icons/HeroIcons/HiLogout';
 import {useAuth} from "../../hooks/useAuth";
 import UserDisplay from "../../components/UserDisplay";
 import ChannelSelector from "../../components/ChannelSelector";
@@ -35,15 +38,15 @@ const Sidebar: React.FC = () => {
 
             <div className="px-2 flex h-full flex-col py-3">
 
-                <NavItem title="Home" icon={<HiHome/>} to="/" />
+                <NavItem title="Home" icon={<HiHome className="w-4 h-4" />} to="/" />
 
-                <NavItem title="Account" icon={<HiUser />} to="/account" />
+                <NavItem title="Account" icon={<HiUser className="w-4 h-4" />} to="/account" />
 
-                <NavItem title="Hunting" icon={<HiUser />} to="/hunting" />
+                <NavItem title="Hunting" icon={<HiLocationMarker className="w-4 h-4" />} to="/hunting" />
 
                 <div className="mt-auto"></div>
 
-                <NavItem title="Logout" icon={<HiLogout />} to="/logout" href />
+                <NavItem title="Logout" icon={<HiLogout className="w-4 h-4" />} to="/logout" href />
 
             </div>
 

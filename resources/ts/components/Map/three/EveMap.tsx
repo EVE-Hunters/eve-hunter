@@ -1,13 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {CentroidInterface, Connection, SolarSystemInterface} from "../../../interfaces/Map/MapInterfaces";
-import LocationApi from "../../../httpClient/LocationApi";
+import {Connection, SolarSystemInterface} from "../../../interfaces/Map/MapInterfaces";
 import {Line} from "@react-three/drei";
-import {useThree} from "@react-three/fiber";
 import System from "./System";
 import {Vector3} from "three";
 import {useMapControls} from "../../../hooks/Map/useMapControls";
-import {useHuntingLocationContext} from "../../../hooks/Location/useHuntingLocationContext";
-import {useMapSettingsStore} from "../../../store";
+import { useMapSettingsStore } from '../../../stores/Map/MapSettingsStore';
+
 
 interface EveMapComponentInterface {
     SourceSystem: SolarSystemInterface,

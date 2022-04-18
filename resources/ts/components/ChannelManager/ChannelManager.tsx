@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import { HiPencil, HiPlus } from 'react-icons/hi';
 import {useAuth} from '../../hooks/useAuth';
 import CreateChannelModal from "./CreateChannelModal";
 import {useChannels} from "../../hooks/useChannels";

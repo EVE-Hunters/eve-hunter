@@ -2,7 +2,7 @@ import {Dialog, Transition} from '@headlessui/react';
 import React, {Fragment, useState} from 'react';
 import {useChannels} from "../../hooks/useChannels";
 import {ChannelInterface} from "../../interfaces/User/ChannelInterface";
-import {HiPlus} from "react-icons/hi";
+import { HiPlus } from '../Icons/HeroIcons/HiPlus';
 import ChannelClient from "../../httpClient/ChannelClient";
 
 interface DeleteChannelModalInterface {

@@ -5,12 +5,26 @@ object-assign
 */
 
 /*!
- * Pusher JavaScript Library v7.0.6
- * https://pusher.com/
+ * The buffer module from node.js, for the browser.
  *
- * Copyright 2020, Pusher
- * Released under the MIT licence.
+ * @author   Feross Aboukhadijeh <http://feross.org>
+ * @license  MIT
  */
+
+/*!
+Custom build of Typr.ts (https://github.com/fredli74/Typr.ts) for use in Troika text rendering.
+Original MIT license applies: https://github.com/fredli74/Typr.ts/blob/master/LICENSE
+*/
+
+/*!
+Custom bundle of woff2otf (https://github.com/arty-name/woff2otf) with fflate
+(https://github.com/101arrowz/fflate) for use in Troika text rendering. 
+Original licenses apply: 
+- fflate: https://github.com/101arrowz/fflate/blob/master/LICENSE (MIT)
+- woff2otf.js: https://github.com/arty-name/woff2otf/blob/master/woff2otf.js (Apache2)
+*/
+
+/*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
 
 /**
  * React Router DOM v6.2.2
@@ -43,17 +57,8 @@ object-assign
  * LICENSE file in the root directory of this source tree.
  */
 
-/** @license React v17.0.2
- * react-dom.production.min.js
- *
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-/** @license React v17.0.2
- * react.production.min.js
+/** @license React v0.26.2
+ * react-reconciler.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
  *

@@ -15,9 +15,23 @@ mix.ts('resources/ts/index.tsx', 'public/js')
     .postCss('resources/css/app.css', 'public/css', [
         require('tailwindcss')
     ])
-    //.sourceMaps()
-    //.browserSync('127.0.0.1:8000');
+    .extract([
+        'react',
+        'three',
+        'react-dom',
+        '@react-three',
+        '@react-three/fiber',
+        '@react-three/drei',
+        '@react-spring',
+        'zustand',
+        'valtio',
+        'underscore',
+        'pusher-js',
+        'echo',
+        '@headlessui'
+    ])
 
 if(!mix.inProduction()){
+    mix.sourceMaps()
     //mix.bundleAnalyzer()
 }

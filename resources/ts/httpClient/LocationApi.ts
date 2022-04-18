@@ -1,3 +1,4 @@
+import { SolarSystemInterface } from "../interfaces/Map/MapInterfaces";
 import HttpClient from "./HttpClient";
 
 class LocationApi extends HttpClient {
@@ -11,7 +12,7 @@ class LocationApi extends HttpClient {
 
     public searchSystem = (data:any) => this.post('search', data)
 
-    public getNearbySystems = (data:any, system_id: number) => this.post(`nearby/${system_id}`, data)
+    public getNearbySystems = (data:any, system_id: number) => this.post<SolarSystemInterface[]>(`nearby/${system_id}`, data)
 }
 
 export default new LocationApi()

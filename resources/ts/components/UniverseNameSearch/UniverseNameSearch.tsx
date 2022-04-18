@@ -1,9 +1,8 @@
 import {Combobox, Transition} from '@headlessui/react';
 import React, {Fragment, useEffect, useRef, useState} from 'react';
-import {HiCheck, HiSearch} from 'react-icons/hi';
+import { HiSearch } from '../Icons/HeroIcons/HiSearch';
 import {UniverseName} from "../../interfaces/User/UniverseNameInterface";
 import UniverseNameClient from "../../httpClient/UniverseNameClient";
-import EveImage from "../EveImage";
 import UniverseNameDisplay from "./UniverseNameDisplay";
 
 interface UniverseNameSearch {

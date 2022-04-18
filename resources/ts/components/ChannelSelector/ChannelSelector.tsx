@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
-import {HiChevronDown} from "react-icons/hi";
 import {Listbox, Transition} from '@headlessui/react';
 import {useChannels} from "../../hooks/useChannels";
+import { HiChevronDown } from '../Icons/HeroIcons/HiChevronDown';
 
 const ChannelSelector: React.FC = () => {
     const {Channels, ActiveChannel, UpdateActiveChannel} = useChannels()

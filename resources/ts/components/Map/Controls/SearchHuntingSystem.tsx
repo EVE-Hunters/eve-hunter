@@ -1,20 +1,20 @@
 import React, {Fragment, useState, useEffect} from 'react';
 import {Dialog, Transition} from '@headlessui/react';
-import {HiSearch} from "react-icons/hi";
+import { HiSearch } from '../../Icons/HeroIcons/HiSearch';
 import SystemSearch from "./SystemSearch";
-import {useHuntingLocationContext} from "../../../hooks/Location/useHuntingLocationContext";
 import {SolarSystemInterface} from "../../../interfaces/Map/MapInterfaces";
+import { useMapStore } from '../../../stores/Map/MapStore';
 
 
 const SearchHuntingSystem: React.FC = () => {
 
-    const {updateSourceSystem} = useHuntingLocationContext()
+    const { setHuntingSystem } = useMapStore()
 
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const [selectedSystem, setSelectedSystem] = useState<SolarSystemInterface | null>(null)
 
     const handleSystemSelect = (system: SolarSystemInterface | null) => {
-        updateSourceSystem(system)
+        setHuntingSystem(system)
         setIsOpen(false);
     }
 

@@ -1,6 +1,6 @@
 import {Dialog, Transition } from '@headlessui/react';
 import React, {Fragment, useState} from 'react';
-import {HiLockClosed} from "react-icons/hi";
+import { HiLockClosed } from '../Icons/HeroIcons/HiLockClosed';
 import { ChannelInterface } from '../../interfaces/User/ChannelInterface';
 import {UniverseName} from "../../interfaces/User/UniverseNameInterface";
 import ChannelAccessForm from "../forms/Channels/ChannelAccessForm";

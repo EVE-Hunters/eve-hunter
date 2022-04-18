@@ -1,12 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {useHuntingLocationContext} from "../../../hooks/Location/useHuntingLocationContext";
-import {useMapSettingsStore} from "../../../store";
 import SystemPanel from "./SystemPanel";
 import {SolarSystemInterface} from "../../../interfaces/Map/MapInterfaces";
 import {get} from 'underscore';
+import { useMapStore } from '../../../stores/Map/MapStore';
+import { useMapSettingsStore } from '../../../stores/Map/MapSettingsStore';
 
 const SystemsList: React.FC = () => {
-    const {SourceSystem, nearBySystems} = useHuntingLocationContext()
+    const HuntingSystem = useMapStore((state) => state.HuntingSystem);
+    const NearBySystems = useMapStore((state) => state.NearBySystems);
+
     const [shownSystems, setShownSystems] = useState<SolarSystemInterface[]>([])
     const minDelta = useMapSettingsStore((state) => state.minDelta)
     const minNpc1h = useMapSettingsStore((state) => state.minNpc1h)
@@ -15,7 +17,7 @@ const SystemsList: React.FC = () => {
     const jumpRange = useMapSettingsStore((state) => state.jumpRange)
 
     const updateShownSites = () => {
-        let _systems = nearBySystems.filter(sys => (sys.jumps ?? 0) < jumpRange)
+        let _systems = NearBySystems.filter(sys => (sys.jumps ?? 0) < jumpRange)
         _systems = _systems.filter(sys => (sys?.distance ?? 0) <= 8)
         if(minDelta){
             _systems = _systems.filter(sys => sys.npc_delta > minDelta)
@@ -36,13 +38,13 @@ const SystemsList: React.FC = () => {
 
     useEffect(() => {
         updateShownSites();
-    }, [jumpRange, nearBySystems, minDelta, minNpc1h, minNpc24h, sortBy])
+    }, [jumpRange, NearBySystems, minDelta, minNpc1h, minNpc24h, sortBy])
 
 
     return (
         <div className="p-2">
             <div className="flex flex-wrap p-2 max-h-[600px] overflow-y-auto">
-                {SourceSystem && <SystemPanel rtn system={SourceSystem}/>}
+                {HuntingSystem && <SystemPanel rtn system={HuntingSystem}/>}
                 {shownSystems.map(system => {
                     return (<SystemPanel key={system.system_id} system={system}/>)
                 })}

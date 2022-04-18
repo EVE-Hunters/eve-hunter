@@ -1,5 +1,6 @@
 import React from 'react';
-import {useMapSettingsStore} from "../../../store";
+import { useMapSettingsStore } from '../../../stores/Map/MapSettingsStore';
+
 
 const JumpRangeControl: React.FC = () => {
 

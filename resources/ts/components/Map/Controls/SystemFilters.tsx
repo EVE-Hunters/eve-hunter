@@ -1,18 +1,23 @@
 import React from 'react';
-import { useHuntingLocationContext } from '../../../hooks/Location/useHuntingLocationContext';
-import {useMapSettingsStore} from "../../../store";
-import HunterSelector from "../../HunterSelector/HunterSelector";
+import { useMapSettingsStore } from '../../../stores/Map/MapSettingsStore';
+
 
 
 const SystemFilters: React.FC = () => {
+
+    const jumpRange = useMapSettingsStore((state) => state.jumpRange)
+    const tracking = useMapSettingsStore((state) => state.tracking)
 
     const setMinDelta = useMapSettingsStore((state)=> state.setMinDelta)
     const setMin1H = useMapSettingsStore((state)=>state.setMinNpc1h)
     const setMin24H = useMapSettingsStore((state)=> state.setMinNpc24h)
     const setSortBy = useMapSettingsStore((state) => state.setSortBy)
     const setJumpRange = useMapSettingsStore((state) => state.setJumpRange)
-    const jumpRange = useMapSettingsStore((state) => state.jumpRange)
-    const {tracking, toggleTracking} = useHuntingLocationContext()
+    const toggleTracking  = useMapSettingsStore((state) => state.toggleTracking)
+
+
+
+    //const {tracking, toggleTracking} = useHuntingLocationContext()
 
     return (
         <div className="w-full flex align-center rounded-lg bg-white shadow overflow-hidden">

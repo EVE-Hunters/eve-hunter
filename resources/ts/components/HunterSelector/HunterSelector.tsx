@@ -1,9 +1,8 @@
-import React, {Fragment, useRef} from 'react';
-import DropdownMenu from "../DropdownMenu/DropdownMenu";
+import React, {Fragment} from 'react';
 import {useCharacters} from "../../hooks/useCharacters";
 import CharacterAvatar from "../CharacterAvatar";
-import {HiChevronDown} from "react-icons/hi";
-import {Menu, Popover, Transition} from '@headlessui/react';
+import { HiChevronDown } from '../Icons/HeroIcons/HiChevronDown';
+import {Popover, Transition} from '@headlessui/react';
 
 
 const HunterSelector: React.FC = () => {
@@ -24,7 +23,7 @@ const HunterSelector: React.FC = () => {
             <Popover as="div" className="relative w-full text-left">
                 <div>
                     <Popover.Button
-                        className="inline-flex w-full justify-between  px-4 py-2 text-sm font-medium rounded-md bg-white w-full">
+                        className="inline-flex justify-between  px-4 py-2 text-sm font-medium rounded-md bg-white w-full">
                         <span>Hunters ({huntingCharacters.length})</span>
                         <HiChevronDown
                             className="w-5 h-5 ml-2 -mr-1 text-violet-200 hover:text-violet-100"
@@ -51,6 +50,7 @@ const HunterSelector: React.FC = () => {
                                         className={`p-2 cursor-pointer hover:bg-blue-400 hover:text-blue-100 flex items-center select-none space-x-1 ${huntingCharacters.includes(char.character_id) ? 'bg-blue-300' : ''}`}>
                                         <div>
                                             <input type="checkbox" className="text-blue-400"
+                                                    readOnly
                                                    checked={huntingCharacters.includes(char.character_id)}/>
                                         </div>
                                         <div className="w-8 h-8">

@@ -1,27 +1,15 @@
-import create from 'zustand'
-import {MapRenderSettings, SolarSystemInterface} from "./interfaces/Map/MapInterfaces";
+import create from "zustand";
+import { MapRenderSettings, SolarSystemInterface } from "../../interfaces/Map/MapInterfaces";
 
-type MapSettingsStore = {
-    showRangeSphere: boolean,
-
-    toggleRangeSphere: () => void
-}
-
-export const useRangeSphereStore = create<MapSettingsStore>((set) => ({
-    showRangeSphere: false,
-    toggleRangeSphere: () => set((state: any) => ({showRangeSphere: !state.showRangeSphere}))
-}))
 
 type filterSetting = number | null
-type filterSortValue =
-    "jumps"
-    | "npc_delta"
-    | "kill_stats_latest.npc_kills"
-    | "npc_24h"
-    | "latest_system_jumps.ship_jumps"
+
+interface MapSettingsInterface{
+    tracking: boolean,
+    toggleTracking: () => void,
 
 
-interface MapSettings {
+
     showRangeSphere: boolean,
     jumpRange: number,
     maxSecurity: number
@@ -31,18 +19,18 @@ interface MapSettings {
     setMaxSecurity: (sec: number) => void,
     setFocusedSystem: (system: SolarSystemInterface | null) => void,
 
-    systemInfo: MapRenderSettings
+    systemInfo: MapRenderSettings,
 
-    toggleDelta: () => void
-    toggleNpc1h: () => void
-    toggleNpc24h: () => void
-    toggleJumps: () => void
-    toggleSecurity: () => void
+    toggleDelta: () => void,
+    toggleNpc1h: () => void,
+    toggleNpc24h: () => void,
+    toggleJumps: () => void,
+    toggleSecurity: () => void,
 
 
     // filter settings
     minDelta: filterSetting,
-    minNpc1h: filterSetting
+    minNpc1h: filterSetting,
     minNpc24h: filterSetting,
     sortBy: string,
 
@@ -50,11 +38,14 @@ interface MapSettings {
     setMinNpc1h: (val: filterSetting) => void,
     setMinNpc24h: (val: filterSetting) => void,
     setSortBy: (val: string) => void
-
-
 }
 
-export const useMapSettingsStore = create<MapSettings>((set) => ({
+export const useMapSettingsStore = create<MapSettingsInterface>((set) => ({
+
+    tracking: false,
+    toggleTracking: () => set((state) => ({tracking: !state.tracking})),
+
+
     showRangeSphere: true,
     jumpRange: 5,
     maxSecurity: 100,
@@ -94,4 +85,4 @@ export const useMapSettingsStore = create<MapSettings>((set) => ({
     setMinNpc24h: (val: filterSetting) => set(() => ({minNpc24h: val})),
     setSortBy: (val: string) => set(() => ({sortBy: val})),
 
-}))
+}));

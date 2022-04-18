@@ -1,5 +1,4 @@
 import React, {useRef, useState} from 'react';
-import {HiChevronDown} from "react-icons/hi";
 import {useListenToOutsideClick} from "../../hooks/useListenToOutsideClick";
 
 interface DropdownComponentInterface {

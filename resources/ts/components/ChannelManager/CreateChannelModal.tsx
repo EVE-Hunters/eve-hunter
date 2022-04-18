@@ -3,7 +3,6 @@ import {Dialog, Transition} from '@headlessui/react';
 import ChannelForm from "../forms/Channels/ChannelForm";
 import {ChannelFormInterface} from "../../interfaces/User/ChannelInterface";
 import ChannelClient from "../../httpClient/ChannelClient";
-import {useAuth} from "../../hooks/useAuth";
 import {useChannels} from "../../hooks/useChannels";
 
 const CreateChannelModal: React.FC = () => {

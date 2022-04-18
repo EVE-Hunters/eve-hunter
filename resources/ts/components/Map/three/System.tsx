@@ -1,16 +1,15 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {MapRenderSettings, SolarSystemInterface} from "../../../interfaces/Map/MapInterfaces";
-import {Html} from "@react-three/drei";
+import {Center, Html} from "@react-three/drei";
 import {useThree} from "@react-three/fiber";
-import {Vector3} from "three";
 import {useMapControls} from "../../../hooks/Map/useMapControls";
-import {useMapSettingsStore} from "../../../store";
-import {useCharacterLocations} from "../../../stores/UserLocationsStores";
-import {CharacterInterface} from "../../../interfaces/User/CharacterInterface";
 import SystemMapInfo from "./SystemMapInfo";
-import {HiPaperAirplane} from "react-icons/hi";
+import {HiPaperAirplane} from "../../Icons/HeroIcons/HiPaperAirplane";
 import {useCharacters} from "../../../hooks/useCharacters";
 import HuntingApi from "../../../httpClient/HuntingApi";
+import { useMapSettingsStore } from '../../../stores/Map/MapSettingsStore';
+import { get } from 'underscore';
+import Broadcaster from '../../../events/Broadcaster';
 
 type meshElement = JSX.IntrinsicElements['mesh']
 
@@ -21,25 +20,27 @@ interface SystemComponentInterface extends meshElement {
 
 const System: React.FC<SystemComponentInterface> = ({source, system, ...props}) => {
 
-    /*const inhabitants: CharacterInterface[] = useCharacterLocations(
-        (state) => Array.isArray(state.SolarSystemInhabitants[system.system_id]) ?
-            state.SolarSystemInhabitants[system.system_id] : [] )*/
-
-
     const renderSettings = useRef<MapRenderSettings>(useMapSettingsStore.getState().systemInfo)
-
 
     useEffect(() => {
         //useCharacterLocations.subscribe(state => (inhabitants.current = state.SolarSystemInhabitants[system.system_id] ?? []))
         useMapSettingsStore.subscribe(state => (renderSettings.current = state.systemInfo))
     }, [])
 
+    const colorMap = {
+        0: '#107a00',
+        1: '#387800',
+        2: '#517600',
+        3: '#517600',
+        4: '#687200',
+        5: '#7d6c00',
+        6: '#926500',
+        7: '#a75b00',
+        8: '#ba4e00',
+        9: '#cc3c00',
+        10: '#dd1f00'
+    }
 
-    /*const delta = useMapSettingsStore((state) => state.delta)
-    const npc1h = useMapSettingsStore((state) => state.npc1h)
-    const npc24h = useMapSettingsStore((state) => state.npc24h)
-    const jumps = useMapSettingsStore((state) => state.jumps)
-    const security = useMapSettingsStore((state) => state.security)*/
 
     const mesh = useRef<THREE.Mesh>(null!)
     const camera = useThree((state) => state.camera)
@@ -51,27 +52,13 @@ const System: React.FC<SystemComponentInterface> = ({source, system, ...props}) 
     const {setCoordinates, currentCenter} = useMapControls()
 
     const inRangeLy: boolean = (system?.distance ?? 0) < 8
-    const inRangeJ: boolean = !!(system.jumps ?? 0 <= 5)
 
-    let sphereColor = (inRangeJ && inRangeLy) ? 'purple' : 'orange';
-    if (source.system_id === system.system_id) {
-        sphereColor = 'green'
+    let sphereColor = '#FF2400';
+    if(inRangeLy){
+        let range = get(system, 'jumps', '0')
+        sphereColor = get(colorMap, range, '#FF2400')
     }
 
-    let deltaColor: string = '';
-    if (system.npc_delta > 0) deltaColor = 'text-yellow-400';
-    if (system.npc_delta > 50) deltaColor = 'text-lime-400';
-    if (system.npc_delta > 100) deltaColor = 'text-emerald-400';
-    if (system.npc_delta > 200) deltaColor = 'text-emerald-600';
-    if (system.npc_delta < 0) deltaColor = 'text-red-500';
-
-    const npcKills = system.kill_stats_latest?.npc_kills ?? 0;
-    let npcColor: string = '';
-    if (npcKills > 0) npcColor = 'text-yellow-400';
-    if (npcKills > 100) npcColor = 'text-lime-400';
-    if (npcKills > 200) npcColor = 'text-lime-600';
-    if (npcKills > 300) npcColor = 'text-emerald-400';
-    if (npcKills > 400) npcColor = 'text-emerald-600';
 
     const CenterCamera = () => {
 
@@ -91,6 +78,14 @@ const System: React.FC<SystemComponentInterface> = ({source, system, ...props}) 
 
         setCoordinates(camPos, sysPos)
     }
+
+    useEffect(() => {
+        Broadcaster.listen(`system.${system.system_id}.focus`, CenterCamera);
+
+        return () => {
+            Broadcaster.forget(`system.${system.system_id}.focus`, CenterCamera);
+        }
+    }, [])
 
     useEffect(() => {
         document.body.style.cursor = hovered ? 'pointer' : 'auto';
@@ -125,7 +120,7 @@ const System: React.FC<SystemComponentInterface> = ({source, system, ...props}) 
             <Html distanceFactor={3}>
                 <div onPointerOver={handleHoverOn} onPointerOut={handleHoverOff}>
                     <div
-                        className={`ml-4 -mt-10 flex flex-col w-[max-content] text-sky-400  select-none transform scale-80`}>
+                        className={`ml-4 -mt-14 flex flex-col w-[max-content] text-sky-400  select-none transform scale-80`}>
                         <div className="pl-8 border-b-2 border-red-500 flex flex-col">
                             <div className="hover:text-blue-500 cursor-pointer text-right" onClick={CenterCamera}>
                                 <span>{system.name}</span>

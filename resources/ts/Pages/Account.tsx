@@ -1,6 +1,5 @@
-import React, {useContext} from 'react';
-import {useCharacters} from "../hooks/useCharacters";
-import CharacterAvatar from "../components/CharacterAvatar";
+import React from 'react';
+
 import ApplicationLayout from "../layouts/ApplicationLayout";
 import CharacterManager from "../components/CharacterManager";
 import ChannelManager from "../components/ChannelManager/ChannelManager";
@@ -13,7 +12,7 @@ const Account: React.FC = () => {
             <div className="flex space-x-2">
                 <div className="w-64 ">
                     <CharacterManager/>
-                </div>
+            </div>
                 <div className="w-64">
                     <ChannelManager/>
                 </div>

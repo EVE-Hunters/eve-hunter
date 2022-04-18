@@ -1,9 +1,7 @@
 import React, {Fragment, useState} from 'react';
 import {Dialog, Transition} from "@headlessui/react";
-import {ModalInterface} from "../../interfaces/Components/ModalInterface";
 import {CharacterInterface} from "../../interfaces/User/CharacterInterface";
 import {useCharacters} from "../../hooks/useCharacters";
-import CharacterAvatar from "../CharacterAvatar";
 
 interface RemoveCharacterModal {
     character: CharacterInterface

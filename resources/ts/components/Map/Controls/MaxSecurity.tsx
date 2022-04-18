@@ -1,5 +1,5 @@
 import React from 'react';
-import {useMapSettingsStore} from "../../../store";
+import { useMapSettingsStore } from '../../../stores/Map/MapSettingsStore';
 
 const MaxSecurity: React.FC = () => {
     const setMaxSecurity = useMapSettingsStore((state) => state.setMaxSecurity)

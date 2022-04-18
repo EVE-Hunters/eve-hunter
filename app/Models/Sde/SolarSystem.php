@@ -21,6 +21,10 @@ class SolarSystem extends \LaravelEveTools\EveSeeder\Models\Sde\SolarSystem
 
     protected $with = ['constellation', 'region'];
 
+    protected $fillable = [
+        'distance'
+    ];
+
 
     public function system_jumps()
     {
@@ -121,9 +125,7 @@ class SolarSystem extends \LaravelEveTools\EveSeeder\Models\Sde\SolarSystem
         $this->latestSystemJumps;
     }
 
-    protected $fillable = [
-        'distance'
-    ];
+
 
     public function x(): Attribute
     {

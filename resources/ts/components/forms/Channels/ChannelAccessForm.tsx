@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {UniverseName} from "../../../interfaces/User/UniverseNameInterface";
-import {HiPlus, HiSearch} from "react-icons/hi";
+import { HiPlus } from '../../Icons/HeroIcons/HiPlus';
 import UniverseNameSearch from "../../UniverseNameSearch/UniverseNameSearch";
 import UniverseNameDisplay from "../../UniverseNameSearch/UniverseNameDisplay";
 
