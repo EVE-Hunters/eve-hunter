@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "17635f83ecc6af806b1f903cd97935a8",
+    "content-hash": "ec58a3eedd4d703a670b46acf4cd02bc",
     "packages": [
         {
             "name": "beyondcode/laravel-websockets",
@@ -1871,17 +1871,11 @@
         },
         {
             "name": "laravelevetools/eve-seeder",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/LaravelEveTools/eve-seeder.git",
-                "reference": "efa762cc70f565ff57c111f760c03bc4dac79f76"
-            },
+            "version": "dev-master",
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/LaravelEveTools/eve-seeder/zipball/efa762cc70f565ff57c111f760c03bc4dac79f76",
-                "reference": "efa762cc70f565ff57c111f760c03bc4dac79f76",
-                "shasum": ""
+                "type": "path",
+                "url": "../../packages/laravelevetools/eve-seeder",
+                "reference": "efa762cc70f565ff57c111f760c03bc4dac79f76"
             },
             "require": {
                 "laravel/framework": "^8.0|^9.0",
@@ -1900,16 +1894,13 @@
                     "LaravelEveTools\\EveSeeder\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "GPL-2.0-or-later"
             ],
             "description": "EVE Online SDE seeders for Laravel Projects",
-            "support": {
-                "issues": "https://github.com/LaravelEveTools/eve-seeder/issues",
-                "source": "https://github.com/LaravelEveTools/eve-seeder/tree/1.0.0"
-            },
-            "time": "2022-04-10T09:06:26+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "laravelevetools/eve-socialite-provider",
@@ -11009,7 +11000,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "laravelevetools/eve-seeder": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

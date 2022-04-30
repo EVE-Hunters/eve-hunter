@@ -35,6 +35,7 @@ export interface SolarSystemInterface {
     constellation: ConstellationInterface,
     region: RegionInterface
     connections: SystemConnection[],
+    ice: boolean,
     security: number,
     jumps?: number,
     distance?: number,

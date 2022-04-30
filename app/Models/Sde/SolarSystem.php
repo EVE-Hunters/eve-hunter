@@ -4,7 +4,6 @@
 namespace App\Models\Sde;
 
 
-use Carbon\AbstractTranslator;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use LaravelEveTools\EveSeeder\Models\Sde\MapSolarSystemJump;
