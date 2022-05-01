@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ec58a3eedd4d703a670b46acf4cd02bc",
+    "content-hash": "0ecea275c2224f279536455ac353234a",
     "packages": [
         {
             "name": "beyondcode/laravel-websockets",
@@ -1564,6 +1564,83 @@
             "time": "2022-04-12T15:43:03+00:00"
         },
         {
+            "name": "laravel/horizon",
+            "version": "v5.9.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/horizon.git",
+                "reference": "a98150769dc970972c30219662fe0e64259b733f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/horizon/zipball/a98150769dc970972c30219662fe0e64259b733f",
+                "reference": "a98150769dc970972c30219662fe0e64259b733f",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-pcntl": "*",
+                "ext-posix": "*",
+                "illuminate/contracts": "^8.17|^9.0",
+                "illuminate/queue": "^8.17|^9.0",
+                "illuminate/support": "^8.17|^9.0",
+                "nesbot/carbon": "^2.17",
+                "php": "^7.3|^8.0",
+                "ramsey/uuid": "^4.0",
+                "symfony/error-handler": "^5.0|^6.0",
+                "symfony/process": "^5.0|^6.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.0",
+                "orchestra/testbench": "^6.0|^7.0",
+                "phpunit/phpunit": "^9.0",
+                "predis/predis": "^1.1"
+            },
+            "suggest": {
+                "ext-redis": "Required to use the Redis PHP driver.",
+                "predis/predis": "Required when not using the Redis PHP driver (^1.1)."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Laravel\\Horizon\\HorizonServiceProvider"
+                    ],
+                    "aliases": {
+                        "Horizon": "Laravel\\Horizon\\Horizon"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravel\\Horizon\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "Dashboard and code-driven configuration for Laravel queues.",
+            "keywords": [
+                "laravel",
+                "queue"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel/horizon/issues",
+                "source": "https://github.com/laravel/horizon/tree/v5.9.7"
+            },
+            "time": "2022-04-20T18:07:08+00:00"
+        },
+        {
             "name": "laravel/sanctum",
             "version": "v2.15.1",
             "source": {
@@ -1871,11 +1948,17 @@
         },
         {
             "name": "laravelevetools/eve-seeder",
-            "version": "dev-master",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/LaravelEveTools/eve-seeder.git",
+                "reference": "ace3b284d879ee2b8eabe7a4ecd030f85864f75b"
+            },
             "dist": {
-                "type": "path",
-                "url": "../../packages/laravelevetools/eve-seeder",
-                "reference": "efa762cc70f565ff57c111f760c03bc4dac79f76"
+                "type": "zip",
+                "url": "https://api.github.com/repos/LaravelEveTools/eve-seeder/zipball/ace3b284d879ee2b8eabe7a4ecd030f85864f75b",
+                "reference": "ace3b284d879ee2b8eabe7a4ecd030f85864f75b",
+                "shasum": ""
             },
             "require": {
                 "laravel/framework": "^8.0|^9.0",
@@ -1894,13 +1977,16 @@
                     "LaravelEveTools\\EveSeeder\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "GPL-2.0-or-later"
             ],
             "description": "EVE Online SDE seeders for Laravel Projects",
-            "transport-options": {
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/LaravelEveTools/eve-seeder/issues",
+                "source": "https://github.com/LaravelEveTools/eve-seeder/tree/1.0.1"
+            },
+            "time": "2022-04-30T22:35:47+00:00"
         },
         {
             "name": "laravelevetools/eve-socialite-provider",
@@ -11000,14 +11086,12 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "laravelevetools/eve-seeder": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.1"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
