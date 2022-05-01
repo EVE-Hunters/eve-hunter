@@ -24,6 +24,10 @@ class SolarSystem extends \LaravelEveTools\EveSeeder\Models\Sde\SolarSystem
         'distance'
     ];
 
+    protected $casts = [
+        'ice' => 'boolean'
+    ];
+
 
     public function system_jumps()
     {

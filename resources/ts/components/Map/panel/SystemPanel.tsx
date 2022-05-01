@@ -8,6 +8,7 @@ import {useCharacters} from "../../../hooks/useCharacters";
 import { useMapSettingsStore } from '../../../stores/Map/MapSettingsStore';
 import { useStatisticColors } from '../../../hooks/Map/useStatisticColors';
 import Broadcaster from '../../../events/Broadcaster';
+import useSystemSecurityColor from '../../../hooks/Map/useSystemSecurityColor'
 
 interface SystemPanelInterface {
     system: SolarSystemInterface
@@ -20,6 +21,7 @@ const SystemPanel: React.FC<SystemPanelInterface> = ({system, rtn}) => {
     const {huntingCharacters} = useCharacters();
     const setFocusedSystem = useMapSettingsStore((state) => state.setFocusedSystem);
     const [npc_1h_color, npc_24h_color, npc_delta_color] = useStatisticColors(system);
+    const systemSecurityColor = useSystemSecurityColor(system);
 
     const SetDestination = () => {
         HuntingApi.setDestination(system.system_id, huntingCharacters);
@@ -31,7 +33,7 @@ const SystemPanel: React.FC<SystemPanelInterface> = ({system, rtn}) => {
     }
 
     return (
-        <div className="w-44 m-1 rounded shadow bg-gray-200"
+        <div className={`w-44 m-1 rounded shadow bg-gray-200 ${system.ice ? 'ring-2 ring-offset-1 ring-blue-500' : ''}`}
              onPointerOver={() => setFocusedSystem(system)}
              onPointerOut={() => setFocusedSystem(null)}>
             <div className="flex flex-col">
@@ -44,8 +46,9 @@ const SystemPanel: React.FC<SystemPanelInterface> = ({system, rtn}) => {
                         </div>
                     </div>
                     <div className="text-right flex text-xs">
+                        <span className={`font-semibold ${systemSecurityColor}`}>{Math.round((system.security + Number.EPSILON) * 100) / 100}</span>
                         <div className="ml-auto"/>
-                        {system.jumps ?? 0} Jumps
+                        <span>{system.jumps ?? 0} Jumps</span>
                     </div>
                 </div>
 

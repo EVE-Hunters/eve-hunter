@@ -20,12 +20,6 @@
         "lorisleiva/laravel-actions": "^2.4",
         "pusher/pusher-php-server": "^7.0"
     },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../../packages/laravelevetools/eve-seeder"
-        }
-    ],
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",

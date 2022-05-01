@@ -30,12 +30,12 @@ const ApplicationLayout: React.FC = ({children}) => {
             <div className="w-full h-full flex">
                 <Sidebar/>
 
-                <div className="flex w-full flex-col">
+                <div className="flex w-full h-full flex-col">
                     {/* Application Header */}
                     <div className="h-8 bg-sky-700 text-sky-100 flex px-4 py-1">
                         <span>Blops Hunter</span>
                     </div>
-                    <div className="p-4">
+                    <div className="p-4 h-full overflow-y-auto">
                         {children}
                     </div>
                 </div>

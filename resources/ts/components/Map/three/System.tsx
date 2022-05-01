@@ -10,6 +10,7 @@ import HuntingApi from "../../../httpClient/HuntingApi";
 import { useMapSettingsStore } from '../../../stores/Map/MapSettingsStore';
 import { get } from 'underscore';
 import Broadcaster from '../../../events/Broadcaster';
+import useSystemSecurityColor from "../../../hooks/Map/useSystemSecurityColor";
 
 type meshElement = JSX.IntrinsicElements['mesh']
 
@@ -48,6 +49,7 @@ const System: React.FC<SystemComponentInterface> = ({source, system, ...props}) 
     const focusedSystem = useMapSettingsStore((state) => state.focusedSystem);
     const setFocusedSystem = useMapSettingsStore((state) => state.setFocusedSystem);
     const {huntingCharacters} = useCharacters()
+    const securityTextColor = useSystemSecurityColor(system);
 
     const {setCoordinates, currentCenter} = useMapControls()
 
@@ -123,9 +125,9 @@ const System: React.FC<SystemComponentInterface> = ({source, system, ...props}) 
                         className={`ml-4 -mt-14 flex flex-col w-[max-content] text-sky-400  select-none transform scale-80`}>
                         <div className="pl-8 border-b-2 border-red-500 flex flex-col">
                             <div className="hover:text-blue-500 cursor-pointer text-right" onClick={CenterCamera}>
-                                <span>{system.name}</span>
+                                <span className={`px-2 py-0.5 ${system.ice ? ' rounded-lg ring-1 ring-offset-1 ring-blue-500' : ''}`}>{system.name}</span>
                                 {renderSettings.current.security && <span
-                                    className="ml-2">{Math.round((system.security + Number.EPSILON) * 100) / 100}</span>}
+                                    className={`ml-2`}>{Math.round((system.security + Number.EPSILON) * 100) / 100}</span>}
 
                             </div>
                             <div className="text-xs w-full text-right">{system.jumps ?? 0} Jumps</div>

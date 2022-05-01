@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {Connection, SolarSystemInterface} from "../../../interfaces/Map/MapInterfaces";
 import {Line} from "@react-three/drei";
 import System from "./System";
-import {Vector3} from "three";
 import {useMapControls} from "../../../hooks/Map/useMapControls";
 import { useMapSettingsStore } from '../../../stores/Map/MapSettingsStore';
 
@@ -21,7 +20,7 @@ const EveMap: React.FC<EveMapComponentInterface> = ({SourceSystem, nearBySystems
 
 
     const SetCameraPosition = () => {
-        let v = new Vector3()
+
         SourceSystem ? setCoordinates(
             {x: 2, y: 2, z: 2},
             {x: 0,y: 0,z: 0}) :

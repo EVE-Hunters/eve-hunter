@@ -1,14 +1,12 @@
-import React, {useMemo, useRef} from 'react';
-import {TextureLoader, CubeTextureLoader} from "three";
+import React, {useRef} from 'react';
 import {useThree} from "@react-three/fiber";
+import {CubeTextureLoader} from 'three/src/loaders/CubeTextureLoader'
 
 const Skybox: React.FC = ({...props}) => {
     const { scene } = useThree()
     const mesh = useRef()
 
-
     const loader = new CubeTextureLoader();
-
     const texture = loader.load([
         '/images/skybox/space_ft.png',
         '/images/skybox/space_bk.png',
@@ -21,19 +19,6 @@ const Skybox: React.FC = ({...props}) => {
 
     scene.background = texture;
     return null
-
-
-    /*return (
-        <mesh
-            {...props}
-            ref={mesh}
-            scale={1}
-        >
-            <boxGeometry args={[10000, 10000, 10000]}>
-            </boxGeometry>
-            <meshBasicMaterial args={}></meshBasicMaterial>
-        </mesh>
-    )*/
 }
 
 export default Skybox
