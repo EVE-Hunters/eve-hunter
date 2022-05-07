@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Contracts\Factory as Socialite;
 use Laravel\Socialite\Two\User as SocialiteUser;
+use Illuminate\Support\Str;
 
 class SSoController extends Controller
 {
@@ -50,6 +51,9 @@ class SSoController extends Controller
 
         $redirect = session()->pull('_redirect', '/');
         session()->forget('_redirect');
+        if(Str::contains($redirect, 'login')){
+            $redirect = '/home';
+        }
 
         //return to opp.
         return redirect($redirect);
