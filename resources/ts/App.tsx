@@ -7,7 +7,6 @@ import {
     Route,
 } from "react-router-dom";
 import Login from "./Pages/Login";
-import WebsocketProvider from "./providers/WebsocketProvider";
 import Account from "./Pages/Account";
 import Hunting from "./Pages/Hunting";
 import Fleets from "./Pages/Fleets";

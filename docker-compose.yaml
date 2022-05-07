@@ -1,0 +1,15 @@
+version: "3.2"
+
+services:
+
+  soketi:
+    image: quay.io/soketi/soketi:0.17-16-alpine
+    container_name: soketi
+    ports:
+      - "6001:6001"
+    environment:
+      APP_MANAGER_DRIVER: mysql
+      DB_MYSQL_USERNAME: root
+      DB_MYSQL_PASSWORD: alfapie11
+      DB_MYSQL_DATABASE: soketi
+
