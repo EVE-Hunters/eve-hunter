@@ -1,6 +1,8 @@
 import React from 'react';
 import { useMapSettingsStore } from '../../../stores/Map/MapSettingsStore';
-
+import { useMapStore } from '../../../stores/Map/MapStore';
+import { HiXCircle } from '../../Icons/HeroIcons/HiXCircle';
+import SearchHuntingSystem from './SearchHuntingSystem';
 
 
 const SystemFilters: React.FC = () => {
@@ -8,13 +10,14 @@ const SystemFilters: React.FC = () => {
     const jumpRange = useMapSettingsStore((state) => state.jumpRange)
     const tracking = useMapSettingsStore((state) => state.tracking)
 
-    const setMinDelta = useMapSettingsStore((state)=> state.setMinDelta)
-    const setMin1H = useMapSettingsStore((state)=>state.setMinNpc1h)
-    const setMin24H = useMapSettingsStore((state)=> state.setMinNpc24h)
-    const setSortBy = useMapSettingsStore((state) => state.setSortBy)
     const setJumpRange = useMapSettingsStore((state) => state.setJumpRange)
     const toggleTracking  = useMapSettingsStore((state) => state.toggleTracking)
 
+    const StagingSystem = useMapStore((state) => state.StagingSystem)
+    const HuntingSystem = useMapStore((state) => state.HuntingSystem);
+    const SetHuntingSystem = useMapStore((state) => state.setHuntingSystem)
+    const mapEnabled = useMapStore((state) => state.mapEnabled)
+    const toggleMap = useMapStore((state) => state.toggleMap)
 
 
     //const {tracking, toggleTracking} = useHuntingLocationContext()
@@ -22,37 +25,30 @@ const SystemFilters: React.FC = () => {
     return (
         <div className="w-full flex align-center rounded-lg bg-white shadow overflow-hidden">
             <div className="p-2 border-r-2 bg-gray-200">
-                Filters
-            </div>
-            <div className="flex p-2 border-r-2">
-                <span>Min Delta</span>
-                <input type="number" className="ml-1 w-16 rounded border px-1"
-                       onChange={e => setMinDelta(e.target.value ? parseInt(e.target.value) : null)}/>
-            </div>
-            <div className="flex p-2 border-r-2">
-                <span>Min Npc (1H)</span>
-                <input type="number" className="ml-1 w-16 rounded border px-1"
-                       onChange={e => setMin1H(e.target.value ? parseInt(e.target.value) : null)}/>
-            </div>
-            <div className="flex p-2 border-r-2">
-                <span>Min Npc (24H)</span>
-                <input type="number" className="ml-1 w-16 rounded border px-1"
-                       onChange={e => setMin24H(e.target.value ? parseInt(e.target.value) : null)}/>
+                Settings
             </div>
 
+            <button className={`px-3 py-1 rounded shadow ${mapEnabled ? 'bg-red-400 text-red-100':'bg-green-400 text-green-100'}`} onClick={() => toggleMap()}>
+                { mapEnabled ? 'Disable ': 'Enable '}Map
+            </button>
+
+            <div className="flex min-w-72 w-72 items-center pl-2">
+                Staging From: {StagingSystem?.name ?? ''}
+            </div>
+
+            <div className="flex min-w-72 w-72 items-center">
+                <SearchHuntingSystem />
+                <div className="flex">Hunting From: {HuntingSystem == null ? null : (
+                    <>
+                        {HuntingSystem.name}
+                        <HiXCircle className="cursor-pointer hover:text-red-500" onClick={() => SetHuntingSystem(null)} />
+                     </>
+                )}</div>
+            </div>
 
 
             <div className="ml-auto"></div>
-            <div className="flex p-2">
-                <span>Sort By</span>
-                <select className="ml-1 w-24 rounded border px-1" onChange={e => setSortBy(e.target.value)}>
-                    <option value="jumps">Jumps</option>
-                    <option value="npc_delta">Delta</option>
-                    <option value="kill_stats_latest.npc_kills">Npc (1H)</option>
-                    <option value="npc_24h">NPC (24H)</option>
-                    <option value="latest_system_jumps.ship_jumps">Traffic</option>
-                </select>
-            </div>
+
             <div className="flex p-2 space-x-2">
                 <span>Hunt Range</span>
                 <input type="range" min="1" max="10" className="m-w-44 text-blue-500"

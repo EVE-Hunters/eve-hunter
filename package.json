@@ -37,6 +37,7 @@
     },
     "dependencies": {
         "@babel/preset-react": "^7.16.7",
-        "mitt": "^3.0.0"
+        "mitt": "^3.0.0",
+        "react-hot-toast": "^2.2.0"
     }
 }

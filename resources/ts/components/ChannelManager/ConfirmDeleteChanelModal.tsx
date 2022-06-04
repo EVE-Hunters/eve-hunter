@@ -4,6 +4,7 @@ import {useChannels} from "../../hooks/useChannels";
 import {ChannelInterface} from "../../interfaces/User/ChannelInterface";
 import { HiPlus } from '../Icons/HeroIcons/HiPlus';
 import ChannelClient from "../../httpClient/ChannelClient";
+import notify from '../../helpers/notify';
 
 interface DeleteChannelModalInterface {
     channel: ChannelInterface
@@ -16,6 +17,7 @@ const ConfirmDeleteChanelModal: React.FC<DeleteChannelModalInterface> = ({channe
     const deleteChannel = () => {
         ChannelClient.delete(channel).then(() => {
             UpdateChannelList();
+            notify("Channel Deleted", "")
         }).finally(() => {
             setIsOpen(false)
         })

@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {MapRenderSettings, SolarSystemInterface} from "../../../interfaces/Map/MapInterfaces";
 import {Center, Html} from "@react-three/drei";
-import {useThree} from "@react-three/fiber";
+import {useFrame, useThree} from "@react-three/fiber";
 import {useMapControls} from "../../../hooks/Map/useMapControls";
 import SystemMapInfo from "./SystemMapInfo";
 import {HiPaperAirplane} from "../../Icons/HeroIcons/HiPaperAirplane";
@@ -22,6 +22,9 @@ interface SystemComponentInterface extends meshElement {
 const System: React.FC<SystemComponentInterface> = ({source, system, ...props}) => {
 
     const renderSettings = useRef<MapRenderSettings>(useMapSettingsStore.getState().systemInfo)
+
+    const [isFocused, setIsFocused] = useState<boolean>(false);
+    const [isGrowing, setIsGrowing] = useState<boolean>(true);
 
     useEffect(() => {
         //useCharacterLocations.subscribe(state => (inhabitants.current = state.SolarSystemInhabitants[system.system_id] ?? []))
@@ -44,6 +47,7 @@ const System: React.FC<SystemComponentInterface> = ({source, system, ...props}) 
 
 
     const mesh = useRef<THREE.Mesh>(null!)
+    const radius = useRef<number>(0.05)
     const camera = useThree((state) => state.camera)
     const [hovered, setHovered] = useState<boolean>(false)
     const focusedSystem = useMapSettingsStore((state) => state.focusedSystem);
@@ -61,6 +65,24 @@ const System: React.FC<SystemComponentInterface> = ({source, system, ...props}) 
         sphereColor = get(colorMap, range, '#FF2400')
     }
 
+    useFrame(({clock}) => {
+        //const a = clock.getElapsedTime();
+        if(isFocused){
+            if(isGrowing){
+                radius.current = radius.current+0.001;
+            }else{
+                radius.current = radius.current-0.001;
+            }
+
+            if(radius.current >= 0.1){
+                setIsGrowing(false);
+            }
+            if(radius.current <= 0.05){
+                setIsGrowing(true)
+            }
+        }
+
+    })
 
     const CenterCamera = () => {
 
@@ -80,6 +102,18 @@ const System: React.FC<SystemComponentInterface> = ({source, system, ...props}) 
 
         setCoordinates(camPos, sysPos)
     }
+
+    useEffect(() => {
+        let isFocused = focusedSystem?.system_id == system.system_id
+
+        setIsFocused(isFocused)
+
+        if(!isFocused){
+            radius.current = 0.05
+        }
+
+
+    }, [focusedSystem])
 
     useEffect(() => {
         Broadcaster.listen(`system.${system.system_id}.focus`, CenterCamera);
@@ -117,18 +151,22 @@ const System: React.FC<SystemComponentInterface> = ({source, system, ...props}) 
             onPointerOver={handleHoverOn}
             onPointerOut={handleHoverOff}
         >
-            <sphereGeometry args={[0.05, 15, 8]}/>
+            <sphereGeometry args={[radius.current, 15, 8]}/>
             <meshStandardMaterial color={sphereColor}/>
             <Html distanceFactor={3}>
                 <div onPointerOver={handleHoverOn} onPointerOut={handleHoverOff}>
                     <div
                         className={`ml-4 -mt-14 flex flex-col w-[max-content] text-sky-400  select-none transform scale-80`}>
                         <div className="pl-8 border-b-2 border-red-500 flex flex-col">
-                            <div className="hover:text-blue-500 cursor-pointer text-right" onClick={CenterCamera}>
-                                <span className={`px-2 py-0.5 ${system.ice ? ' rounded-lg ring-1 ring-offset-1 ring-blue-500' : ''}`}>{system.name}</span>
-                                {renderSettings.current.security && <span
-                                    className={`ml-2`}>{Math.round((system.security + Number.EPSILON) * 100) / 100}</span>}
-
+                            <div className={`hover:text-blue-500 cursor-pointer text-right`} onClick={CenterCamera}>
+                                <div className="relative inline-flex">
+                                    <span className={`px-2 py-0.5 ${system.ice ? ' rounded-lg ring-1 ring-offset-1 ring-blue-500' : ''}`}>{system.name}</span>
+                                    {renderSettings.current.security && <span
+                                        className={`ml-2`}>{Math.round((system.security + Number.EPSILON) * 100) / 100}</span>}
+                                    { isFocused == false ? null : (
+                                        <span className="animate-ping absolute top-o left-0 inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                                    ) }
+                                </div>
                             </div>
                             <div className="text-xs w-full text-right">{system.jumps ?? 0} Jumps</div>
                             <div className="text-xs w-full text-right flex space-x-2 cursor-pointer items-center" onClick={() => SetDestination()}>

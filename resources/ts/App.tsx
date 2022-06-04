@@ -1,6 +1,7 @@
 import React from 'react';
 import Home from "./Pages/Home";
 import AuthProvider from "./providers/AuthProvider";
+import {Toaster} from 'react-hot-toast'
 import {
     BrowserRouter,
     Routes,
@@ -15,6 +16,7 @@ import Fleets from "./Pages/Fleets";
 const App: React.FC = () => {
     return (
         <div className="h-screen bg-gray-400">
+            <Toaster />
             <BrowserRouter>
                 <AuthProvider>
                     <Routes>

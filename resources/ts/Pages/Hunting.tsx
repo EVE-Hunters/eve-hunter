@@ -9,6 +9,7 @@ import useUserTracking from '../hooks/Map/useUserTracking';
 import useHunterLocations from '../hooks/Map/useHunterLocations';
 import LocationApi from '../httpClient/LocationApi';
 import { Connection, SolarSystemInterface } from '../interfaces/Map/MapInterfaces';
+import HunterNotifications from '../components/HunterNotifications';
 
 
 
@@ -17,6 +18,8 @@ const Hunting: React.FC = () => {
     const MapStore = useMapStore();
     const HuntingSystem = useMapStore((state) => state.HuntingSystem)
     const NearBySystems = useMapStore((state) => state.NearBySystems)
+
+    const mapEnabled = useMapStore((state) => state.mapEnabled)
 
     //Enables and disables tracking of a user.
     useUserTracking()
@@ -63,19 +66,23 @@ const Hunting: React.FC = () => {
     return (
         <ApplicationLayout>
 
-                    <HuntingControls/>
-                    <div className="p-2">
-                        <SystemFilters/>
-                    </div>
+                    <SystemFilters/>
+
                     <div className="flex flex-col lg:flex-row w-full">
-                        <div className="w-full xl:w-6/12">
-                            <Map/>
-                        </div>
-                        <div className="w-full xl:w-6/12">
+                        { !mapEnabled ? (
+                            <div className="w-3/12 bg-black min-h-[600px] mt-2">
+                                <HunterNotifications />
+                            </div>
+                        ) : (
+                            <div className="w-full xl:w-6/12">
+                                <Map/>
+                            </div>
+                        )}
+
+                        <div className={`w-full ${mapEnabled ? 'xl:w-6/12' : 'w-full'}`}>
                             <SystemsList/>
                         </div>
                     </div>
-
         </ApplicationLayout>
     )
 }

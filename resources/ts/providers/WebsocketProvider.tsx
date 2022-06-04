@@ -45,6 +45,7 @@ const WebsocketProvider: React.FC = ({children}) => {
             _channel.listen('.location.updated', (data:any) => {
                 updateCharacterLocation(data);
             })
+
         }
     }, [Channel])
 

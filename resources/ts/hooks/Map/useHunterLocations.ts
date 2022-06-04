@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import notify from "../../helpers/notify";
 import Websocket from "../../http/Websocket";
 import { HuntingFromInterface } from "../../interfaces/Broadcasts/hunting";
 import { ChannelMember } from "../../interfaces/Http/WebsocketSubscription";
@@ -28,11 +29,17 @@ const useHunterLocations = () => {
                 .listen('.hunting.from', (data: HuntingFromInterface) => {
                     MapStore.setHuntingSystem(data.system)
                 })
+                .listen('.waypoint.set', (data: any) => {
+                    notify("Waypoint set", `Your hunter's destinations have been set to ${data.system}`)
+                })
+
         }
 
         return () => {
-            if(user)
+            if(user){
                 Websocket.leave(`User.${user.id}`)
+
+            }
         }
     }, [])
 

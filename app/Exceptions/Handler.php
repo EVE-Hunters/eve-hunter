@@ -34,6 +34,9 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
+        $this->renderable(function(ChannelOwnershipLimitExceeded $e){
+            return response()->json(['message' => $e->getMessage()], 400);
+        });
         $this->reportable(function (Throwable $e) {
             //
         });

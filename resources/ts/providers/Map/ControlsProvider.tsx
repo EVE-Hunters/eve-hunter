@@ -38,7 +38,7 @@ const ControlsProvider: React.FC = ({children}) => {
 
     return (
         <ControlsContext.Provider value={value}>
-            <OrbitControls ref={controls} makeDefault enablePan={true} enableZoom={true} enableRotate={true} />
+            <OrbitControls ref={controls} makeDefault enablePan={true} enableZoom={true} zoomSpeed={3} enableRotate={true} />
             {children}
         </ControlsContext.Provider>
     )

@@ -4,6 +4,7 @@ import {SolarSystemInterface} from "../../../interfaces/Map/MapInterfaces";
 import {get} from 'underscore';
 import { useMapStore } from '../../../stores/Map/MapStore';
 import { useMapSettingsStore } from '../../../stores/Map/MapSettingsStore';
+import {Filters} from "./Filters";
 
 const SystemsList: React.FC = () => {
     const HuntingSystem = useMapStore((state) => state.HuntingSystem);
@@ -43,6 +44,7 @@ const SystemsList: React.FC = () => {
 
     return (
         <div className="p-2">
+            <Filters />
             <div className="flex flex-wrap p-2 max-h-[600px] overflow-y-auto">
                 {HuntingSystem && <SystemPanel rtn system={HuntingSystem}/>}
                 {shownSystems.map(system => {

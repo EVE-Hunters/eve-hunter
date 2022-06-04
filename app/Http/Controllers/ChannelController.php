@@ -27,7 +27,9 @@ class ChannelController extends Controller
 
     public function create(Request $request)
     {
+
         $channel_data = $request->get('channel');
+
         $channel = CreateNewChannel::run($channel_data);
         return response()->json($channel);
     }

@@ -9,6 +9,7 @@ import { useMapSettingsStore } from '../../../stores/Map/MapSettingsStore';
 import { useStatisticColors } from '../../../hooks/Map/useStatisticColors';
 import Broadcaster from '../../../events/Broadcaster';
 import useSystemSecurityColor from '../../../hooks/Map/useSystemSecurityColor'
+import notify from '../../../helpers/notify';
 
 interface SystemPanelInterface {
     system: SolarSystemInterface
@@ -24,13 +25,14 @@ const SystemPanel: React.FC<SystemPanelInterface> = ({system, rtn}) => {
     const systemSecurityColor = useSystemSecurityColor(system);
 
     const SetDestination = () => {
-        HuntingApi.setDestination(system.system_id, huntingCharacters);
+        HuntingApi.setDestination(system.system_id, huntingCharacters)
     }
 
     const focusOnSystem = () => {
         let event = `system.${system.system_id}.focus`;
         Broadcaster.fire(event);
     }
+
 
     return (
         <div className={`w-44 m-1 rounded shadow bg-gray-200 ${system.ice ? 'ring-2 ring-offset-1 ring-blue-500' : ''}`}
@@ -64,9 +66,6 @@ const SystemPanel: React.FC<SystemPanelInterface> = ({system, rtn}) => {
                         <div className={`text-right ${npc_24h_color}`}>
                             NPC (24H): {system?.npc_24h}
                         </div>
-                        <div className="text-right">
-                            Ship Jumps: {system.latest_system_jumps?.ship_jumps ?? 0}
-                        </div>
                     </div>
                 </div>
                 <div className="border-b h-6">
@@ -74,7 +73,7 @@ const SystemPanel: React.FC<SystemPanelInterface> = ({system, rtn}) => {
                 </div>
 
                 <div className="flex w-full p-2">
-                    <a target="_blank" href={`https://evemaps.dotlan.net/map/${system.region.name}/${system.name}`}
+                    <a target="_blank" href={`https://evemaps.dotlan.net/map/${system.region.name.replace(' ', '_')}/${system.name}`}
                        className="mx-1">
                         <img src="/images/dotlan-avatar_400x400.png" alt="evemap" className="w-4 h-4"/>
                     </a>

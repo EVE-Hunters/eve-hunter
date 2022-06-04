@@ -25,7 +25,7 @@ class SSoController extends Controller
 
     public function redirect(Socialite $social)
     {
-         session()->put('_redirect', request()->headers->get('referer'));
+        session()->put('_redirect', request()->headers->get('referer'));
         return $social->driver('eveonline')
             ->scopes($this->scopes)
             ->redirect();

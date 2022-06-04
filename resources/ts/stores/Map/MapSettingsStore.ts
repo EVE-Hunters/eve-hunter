@@ -60,9 +60,9 @@ export const useMapSettingsStore = create<MapSettingsInterface>((set) => ({
 
     //render settings
     systemInfo: {
-        delta: true,
+        delta: false,
         npc1h: true,
-        npc24h: true,
+        npc24h: false,
         jumps: false,
         security: false,
     },

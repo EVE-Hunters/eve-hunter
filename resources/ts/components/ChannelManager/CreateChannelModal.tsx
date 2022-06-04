@@ -4,6 +4,8 @@ import ChannelForm from "../forms/Channels/ChannelForm";
 import {ChannelFormInterface} from "../../interfaces/User/ChannelInterface";
 import ChannelClient from "../../httpClient/ChannelClient";
 import {useChannels} from "../../hooks/useChannels";
+import notify from '../../helpers/notify';
+import { HiExclamation } from '../Icons/HeroIcons/HiExclamation';
 
 const CreateChannelModal: React.FC = () => {
 
@@ -22,14 +24,22 @@ const CreateChannelModal: React.FC = () => {
     const createNewChannel = () => {
         ChannelClient.create(channel).then(data => {
             UpdateChannelList()
+            notify("Channel Created", `${channel.name} Channel Created`)
             setChannel({
                 name: '',
                 staging_system_id: 0
             })
+
             setIsOpen(false);
         }).catch((error) => {
-            let messages = Object.keys(error.response.data.errors).map(key => error.response.data.errors[key]);
-            setErrors(messages)
+            let response = error.response;
+            if(response.status == 400){
+                notify("Error", response.data.message, {type: "error", icon: <HiExclamation />});
+            }else{
+                let messages = Object.keys(error.response.data.errors).map(key => error.response.data.errors[key]);
+                setErrors(messages)
+            }
+
         })
     }
 

@@ -14,12 +14,16 @@ interface MapStore {
     average_1h: number,
     average_delta: number,
 
+    mapEnabled: boolean,
+
     //Mutators
     reset: () => void,
     setStagingSystem: (system: SolarSystemInterface|null) => void,
     setHuntingSystem: (system: SolarSystemInterface|null) => void,
     setNearBysystems: (systems: SolarSystemInterface[]) => void,
     setConnections: (connections: Connection[]) => void,
+    toggleMap: () => void,
+
 }
 
 
@@ -32,6 +36,8 @@ export const useMapStore = create<MapStore>((set) => ({
     NearBySystems: [],
     Connections: [],
 
+    mapEnabled: false,
+    toggleMap: () => (set((state) => ({mapEnabled: !state.mapEnabled}))),
 
     average_24h: 0,
     average_1h: 0,
