@@ -24,10 +24,10 @@ const SystemsList: React.FC = () => {
             _systems = _systems.filter(sys => sys.npc_delta > minDelta)
         }
         if(minNpc1h){
-            _systems = _systems.filter(sys => sys.kill_stats_latest.npc_kills > minNpc1h)
+            _systems = _systems.filter(sys => sys.system_kill_hour.npc_kills > minNpc1h)
         }
         if(minNpc24h){
-            _systems = _systems.filter(sys => sys.npc_24h > minNpc24h)
+            _systems = _systems.filter(sys => sys.system_kill_day.npc_kills > minNpc24h)
         }
         if(sortBy != 'jumps'){
             _systems.sort((sys1, sys2) => {

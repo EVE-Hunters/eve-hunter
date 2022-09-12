@@ -15,4 +15,8 @@ class SystemKills extends Model
         'ship_kills',
         'pod_kills'
     ];
+
+    protected $hidden = [
+        'id', 'created_at', 'updated_at', 'system_id'
+    ];
 }

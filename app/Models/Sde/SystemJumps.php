@@ -12,4 +12,8 @@ class SystemJumps extends Model
         'system_id',
         'ship_jumps'
     ];
+
+    protected $hidden = [
+        'system_id', 'created_at', 'updated_at'
+    ];
 }

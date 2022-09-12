@@ -7,6 +7,8 @@ namespace App\Job\Universe;
 class SystemJumps extends \LaravelEveTools\EveApi\Jobs\Universe\SystemJumps
 {
 
+    public $queue = 'universe';
+
     public function handle()
     {
         $jumps = $this->retrieve();

@@ -18,6 +18,8 @@ class LocationUpdated implements ShouldBroadcast
     public int $presence_channel;
     public int $system_id;
 
+    public $queue = 'character';
+
     public function __construct(CharacterInfo $character,
         int $system_id,
         int $presence_channel

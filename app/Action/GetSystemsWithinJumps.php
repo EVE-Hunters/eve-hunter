@@ -11,7 +11,7 @@ class GetSystemsWithinJumps
     protected SolarSystem $system;
     protected int $jumps;
 
-    const system_with = ['constellation', 'region', 'connections'];
+    const system_with = ['constellation', 'region', 'connections', 'system_kills', 'system_jumps'];
 
 
     public function __construct(SolarSystem $system, int $jumps)
@@ -24,7 +24,10 @@ class GetSystemsWithinJumps
     public function handle()
     {
         $this->system->load(self::system_with);
-        $this->system->calcDistanceFrom($this->system)->calculateStats();
+        $this->system->append(['system_kill_hour', 'system_kill_day', 'npc_delta']);
+        $this->system->jumps = 0;
+        $this->system->distance = 0;
+        //$this->system->calcDistanceFrom($this->system)->calculateStats();
         $systems = collect([$this->system]);
         $temp = collect();
         $currentBranch = $systems;
@@ -42,8 +45,7 @@ class GetSystemsWithinJumps
 
             $temp->each(function (SolarSystem $system) use ($systems, $i) {
                 $system->jumps = $i + 1;
-                $system->calcDistanceFrom($this->system)
-                    ->calculateStats();
+                $system->append(['system_kill_hour', 'system_kill_day', 'npc_delta']);
                 $systems->add($system);
             });
             $currentBranch = $temp;

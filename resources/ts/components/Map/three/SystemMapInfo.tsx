@@ -30,7 +30,7 @@ const SystemMapInfo: React.FC<SystemMapInfoInterface> = ({system}) => {
     if (system.npc_delta > 200) deltaColor = 'text-emerald-600';
     if (system.npc_delta < 0) deltaColor = 'text-red-500';
 
-    const npcKills = system.kill_stats_latest?.npc_kills ?? 0;
+    const npcKills = system.system_kill_hour?.npc_kills ?? 0;
     let npcColor: string = '';
     if (npcKills > 0) npcColor = 'text-yellow-400';
     if (npcKills > 100) npcColor = 'text-lime-400';
@@ -45,13 +45,13 @@ const SystemMapInfo: React.FC<SystemMapInfoInterface> = ({system}) => {
                 Delta: {system?.npc_delta}
             </div>}
             {renderSettings.current.npc1h && <div className={`text-right ${npc_1h_color}`}>
-                NPC (1H): {system.kill_stats_latest?.npc_kills}
+                NPC (1H): {system.system_kill_hour?.npc_kills}
             </div>}
             {renderSettings.current.npc24h && <div className={`text-right ${npc_24h_color}`}>
-                NPC (24H): {system?.npc_24h}
+                NPC (24H): {system?.system_kill_day.npc_kills}
             </div>}
             {renderSettings.current.jumps && <div className="text-right">
-                Ship Jumps: {system.latest_system_jumps?.ship_jumps}
+                Ship Jumps: {system.system_jumps?.ship_jumps}
             </div>}
             <div className="text-right">
                 {inhabitants.length > 0 && (<div>Hunters: {inhabitants.length}</div>)}

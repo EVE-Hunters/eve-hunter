@@ -28,51 +28,35 @@ class SolarSystem extends \LaravelEveTools\EveSeeder\Models\Sde\SolarSystem
         'ice' => 'boolean'
     ];
 
+    protected $hidden = [
+        'system_kills'
+    ];
 
     public function system_jumps()
     {
-        return $this->hasMany(SystemJumps::class, 'system_id', 'system_id');
+        return $this->belongsTo(SystemJumps::class, 'system_id', 'system_id')
+            ->where('created_at', '>=', Carbon::now()->subHours(1)->toDateTimeString())
+            ->withDefault(['ship_jumps'=>0]);
     }
 
     public function system_kills()
     {
-        return $this->hasMany(SystemKills::class, 'system_id', 'system_id');
+        return $this->hasMany(SystemKills::class, 'system_id', 'system_id')
+            ->where('created_at', '>=', Carbon::now()->subHour(24)->toDateTimeString());
     }
 
-    public function latestSystemJumps(){
-       return $this->belongsTo(SystemJumps::class, 'system_id', 'system_id')
-           ->latest()
-           ->where('created_at', '>', Carbon::now()->subHours(1)->toDateTimeString());
-    }
 
-    public function killStatsLatest()
-    {
-        return $this->belongsTo(SystemKills::class, 'system_id', 'system_id')->latest()
-            ->where('created_at', '>', Carbon::now()->subHours(1)->toDateTimeString())
-            ->withDefault([
+    public function systemKillHour(): Attribute{
+        return Attribute::get(function(){
+            $hour = $this->system_kills->where('created_at', '>=', now()->subHour()->toDateTimeString())->first();
+            return !is_null($hour) ? $hour : new SystemKills([
                 'npc_kills' => 0,
-                'pod_kills' => 0,
                 'ship_kills' => 0,
+                'pod_kills' => 0
             ]);
+        });
     }
 
-    public function killStatsPrevious()
-    {
-        return $this->belongsTo(SystemKills::class, 'system_id', 'system_id')
-            ->where('created_at', '>', Carbon::now()->subHour(2)->toDateTimeString())
-            ->where('created_at', '<', Carbon::now()->subHour(1)->toDateTimeString())
-            ->withDefault([
-                'npc_kills' => 0,
-                'pod_kills' => 0,
-                'ship_kills' => 0,
-            ]);
-    }
-
-    public function killStats24Hours()
-    {
-        return $this->system_kills()
-            ->where('created_at', '>', Carbon::now()->subHour(24)->toDateTimeString());
-    }
 
     public function isAnoikis(): Attribute
     {
@@ -85,13 +69,23 @@ class SolarSystem extends \LaravelEveTools\EveSeeder\Models\Sde\SolarSystem
     public function npcDelta(): Attribute
     {
         return Attribute::get(function (){
-            return $this->killStatsLatest->npc_kills - $this->killStatsPrevious->npc_kills;
+
+            $previous = $this->system_kills
+                            ->where('created_at', '>=', now()->subHours(2)->toDateTimeString())
+                            ->first();
+            $last = $this->systemKillHour;
+
+            return ($last?->npc_kills ?? 0) -  ($previous?->npc_kills ?? 0);
         });
     }
 
-    public function npc24Hours(): Attribute{
+    public function systemKillDay(): Attribute{
         return Attribute::get(function(){
-            return $this->killStats24Hours->sum('npc_kills');
+            return [
+                'npc_kills' => $this->system_kills->sum('npc_kills'),
+                'ship_kills' => $this->system_kills->sum('ship_kills'),
+                'pod_kills' => $this->system_kills->sum('pod_kills'),
+            ];
         });
     }
 
@@ -121,12 +115,12 @@ class SolarSystem extends \LaravelEveTools\EveSeeder\Models\Sde\SolarSystem
         return $this;
     }
 
-    public function calculateStats(){
+    /*public function calculateStats(){
         $this->npc_24h = $this->npc24Hours;
         $this->npc_delta = $this->npcDelta;
         $this->kill_24h = $this->killStats24Hours;
         $this->latestSystemJumps;
-    }
+    }*/
 
 
 

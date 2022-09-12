@@ -16,7 +16,7 @@
     </head>
     <body>
         <div id="app"></div>
-        <div id="portal"></div>
-
+        @viteReactRefresh
+        @vite('resources/ts/index.tsx')
     </body>
 </html>

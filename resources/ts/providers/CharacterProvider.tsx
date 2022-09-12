@@ -5,6 +5,7 @@ import {useAuth} from "../hooks/useAuth";
 import AuthApi from "../httpClient/AuthApi";
 import AccountApi from '../httpClient/AccountApi';
 import {CharacterInterface} from "../interfaces/User/CharacterInterface";
+import { useHuntingCharacters, useMainCharacter } from '../stores/account/CharacterStore';
 
 interface CharacterProviderInterface {
     finished?: Function,
@@ -16,7 +17,8 @@ let mainCharTimeout: any = null;
 
 const CharacterProvider: React.FC<CharacterProviderInterface> = ({children, finished}) => {
     const { isAuthenticated, user, reloadIdentity } = useAuth()
-
+    //const [mainCharacter, setMainCharacter] = useMainCharacter();
+    //const [huntingCharacters, setHuntingCharacters] = useHuntingCharacters();
     const [ characters, setCharacters ] = useState<CharacterInterface[]>([])
     const [ mainCharacter, setMainCharacter ] = useState<CharacterInterface|null>(null)
     const [ huntingCharacters, setHuntingCharacters ] = useState<number[]>([]);

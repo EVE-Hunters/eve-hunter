@@ -61,10 +61,10 @@ const SystemPanel: React.FC<SystemPanelInterface> = ({system, rtn}) => {
                             Delta: {system?.npc_delta}
                         </div>
                         <div className={`text-right ${npc_1h_color}`}>
-                            NPC (1H): {system.kill_stats_latest?.npc_kills}
+                            NPC (1H): {system.system_kill_hour?.npc_kills}
                         </div>
                         <div className={`text-right ${npc_24h_color}`}>
-                            NPC (24H): {system?.npc_24h}
+                            NPC (24H): {system?.system_kill_day.npc_kills}
                         </div>
                     </div>
                 </div>

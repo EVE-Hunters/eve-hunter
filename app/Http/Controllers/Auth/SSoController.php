@@ -52,7 +52,7 @@ class SSoController extends Controller
         $redirect = session()->pull('_redirect', '/');
         session()->forget('_redirect');
         if(Str::contains($redirect, 'login')){
-            $redirect = '/home';
+            $redirect = '/';
         }
 
         //return to opp.

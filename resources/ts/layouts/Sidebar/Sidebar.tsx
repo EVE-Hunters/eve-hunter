@@ -11,11 +11,7 @@ import HunterSelector from '../../components/HunterSelector/HunterSelector';
 
 
 const Sidebar: React.FC = () => {
-    const auth = useAuth()
-
     const [isOpen, setIsOpen] = useState<boolean>(true);
-
-    if (!auth?.isAuthenticated) return null
 
     return (
         <div className="w-64 bg-gray-700 h-full flex flex-col">

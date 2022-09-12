@@ -1,6 +1,6 @@
-import {Connection, SolarSystemInterface} from "../../interfaces/Map/MapInterfaces";
-import create from "zustand";
-import { countBy, get } from "underscore";
+import {Connection, SolarSystemInterface} from '../../interfaces/Map/MapInterfaces';
+import create from 'zustand';
+import { countBy, get } from 'underscore';
 
 
 interface MapStore {
@@ -27,57 +27,55 @@ interface MapStore {
 }
 
 
-export const useMapStore = create<MapStore>((set) => ({
+export const useMapStore = create<MapStore>((set) => {
+	return ({
+		range: 10,
 
-    range: 10,
+		StagingSystem: null,
+		HuntingSystem: null,
+		NearBySystems: [],
+		Connections: [],
 
-    StagingSystem: null,
-    HuntingSystem: null,
-    NearBySystems: [],
-    Connections: [],
+		mapEnabled: false,
+		toggleMap: () => (set((state) => ({ mapEnabled: !state.mapEnabled }))),
 
-    mapEnabled: false,
-    toggleMap: () => (set((state) => ({mapEnabled: !state.mapEnabled}))),
-
-    average_24h: 0,
-    average_1h: 0,
-    average_delta: 0,
-
-
-    setStagingSystem: (system) => set(() => ({StagingSystem: system})),
-    setHuntingSystem: (system) => set(() => ({HuntingSystem: system})),
-    reset: () => set(() => ({
-        NearBySystems: [],
-        Connections: [],
-    })),
+		average_24h: 0,
+		average_1h: 0,
+		average_delta: 0,
 
 
-    //Mutators
-    setNearBysystems: (systems) => set(() => {
-
-        let average_24h = 0;
-        let average_1h = 0;
-        let average_delta = 0
-
-        systems.forEach(sys => {
-            average_24h += sys.kill_stats_latest.npc_kills
-            average_1h += sys.npc_24h
-            average_delta += sys.npc_delta
-        })
-
-        average_1h = average_1h / systems.length
-        average_24h = average_24h / systems.length
-        average_delta = average_delta / systems.length
-
-        return {
-            NearBySystems: systems,
-            average_1h,
-            average_24h,
-            average_delta
-        }
-    }),
-    setConnections: (connections) => set(() => ({Connections: connections})),
+		setStagingSystem: (system) => set(() => ({ StagingSystem: system })),
+		setHuntingSystem: (system) => set(() => ({ HuntingSystem: system })),
+		reset: () => set(() => ({
+			NearBySystems: [],
+			Connections: [],
+		})),
 
 
+		//Mutators
+		setNearBysystems: (systems) => set(() => {
 
-}))
+			let average_24h = 0;
+			let average_1h = 0;
+			let average_delta = 0;
+
+			systems.forEach(sys => {
+				average_24h += sys.system_kill_day.npc_kills;
+				average_1h += sys.system_kill_hour.npc_kills;
+				average_delta += sys.npc_delta;
+			});
+
+			average_1h = average_1h / systems.length;
+			average_24h = average_24h / systems.length;
+			average_delta = average_delta / systems.length;
+
+			return {
+				NearBySystems: systems,
+				average_1h,
+				average_24h,
+				average_delta
+			};
+		}),
+		setConnections: (connections) => set(() => ({ Connections: connections })),
+	});
+});
