@@ -1,5 +1,25 @@
-import React from 'react';
+/*import React from 'react';
 import { render } from 'react-dom';
-import App from "./App";
+import App from "./App";*/
 
-render(<App />, document.getElementById("app"));
+/*render(
+    <React.StrictMode>
+        <App />
+    </React.StrictMode>
+
+, document.getElementById("app"));*/
+
+import React from 'react';
+import {createRoot} from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import App from './App';
+const container = document.getElementById('app');
+if(container){
+	const root = createRoot(container);
+	root.render(
+		<React.StrictMode>
+			<BrowserRouter><App/></BrowserRouter>
+		</React.StrictMode>
+	);
+}
+

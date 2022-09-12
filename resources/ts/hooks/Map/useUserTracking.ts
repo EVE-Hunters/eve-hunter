@@ -24,6 +24,7 @@ const useUserTracking = () => {
             clearInterval(trackingInterval.current)
         }
 
+
     }, [trackingUser])
 
 

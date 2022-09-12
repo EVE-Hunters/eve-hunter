@@ -8,7 +8,7 @@ import AvailableChannels from "../components/AvailableChannels";
 const Account: React.FC = () => {
 
     return (
-        <ApplicationLayout>
+        <>
             <div className="flex space-x-2">
                 <div className="w-64 ">
                     <CharacterManager/>
@@ -20,7 +20,7 @@ const Account: React.FC = () => {
                     <AvailableChannels />
                 </div>
             </div>
-        </ApplicationLayout>
+        </>
     )
 }
 

@@ -31,6 +31,7 @@ class LocationController extends Controller
     public function findSystem(Request $request){
 
         $systems = SolarSystem::Query()->where('name', 'like', "%{$request->get('name')}%")->limit(25)->get();
+        $systems->append(['system_kill_hour', 'system_kill_day', 'npc_delta']);
 
         return response()->json(['systems'=>$systems]);
     }

@@ -21,9 +21,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware(['auth'])->group(function () {
 
 
+
     Route::get('/auth/identity', [\App\Http\Controllers\Auth\IdentityController::class, 'fetch']);
 
     Route::get('/auth/characters', [\App\Http\Controllers\Auth\IdentityController::class, 'characters']);
+
+    Route::get('/sde/fetch', [\App\Http\Controllers\SolarSystemController::class, 'index']);
 
     Route::post('/auth/testEvent', function () {
         event(new \App\Events\TestEvent());

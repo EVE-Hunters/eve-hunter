@@ -1,6 +1,6 @@
 import {useContext} from "react";
-import {CharactersContext} from "../contexts/CharactersContext";
+import { AuthContext } from "../contexts/AuthContext";
 
 export const useCharacters = () => {
-    return useContext(CharactersContext)
+    return useContext(AuthContext)
 }

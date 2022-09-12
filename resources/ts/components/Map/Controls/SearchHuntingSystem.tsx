@@ -32,18 +32,36 @@ const SearchHuntingSystem: React.FC = () => {
                     onClick={() => setIsOpen(true)}>
                 <HiSearch className="w-4 h-4"/>
             </button>
-            <Transition appear show={isOpen} as={Fragment}>
+            {false && <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
+                <Dialog.Panel>
+                    <Dialog.Title>
+                        Search System
+                    </Dialog.Title>
+                    <hr/>
+
+                    <div className="my-2">
+                        <SystemSearch onSystemSelect={setSelectedSystem}/>
+                    </div>
+
+                    <div className="flex w-full mt-2">
+                        <button onClick={() => setIsOpen(false)}
+                                className="rounded border px-3 py-2 transition-all hover:bg-gray-200">Cancel
+                        </button>
+                    </div>
+                </Dialog.Panel>
+            </Dialog>}
+            {<Transition appear show={isOpen} as={Fragment}>
                 <Dialog as="div" onClose={() => setIsOpen(false)} className="fixed z-10 inset-0 overflow-y-auto">
                     <div className="flex items-center justify-center min-h-screen">
-                        <Transition.Child as={Fragment}
+                        {isOpen && <Transition.Child as={Fragment}
                                           enter="ease-out duration-300"
                                           enterFrom="opacity-0"
                                           enterTo="opacity-100"
                                           leave="ease-in duration-200"
                                           leaveFrom="opacity-100"
                                           leaveTo="opacity-0">
-                            <Dialog.Overlay className="fixed inset-0 bg-black opacity-30"/>
-                        </Transition.Child>
+                                <div className="fixed inset-0 bg-black opacity-30" />
+                        </Transition.Child>}
 
                         <Transition.Child
                             as={Fragment}
@@ -75,7 +93,7 @@ const SearchHuntingSystem: React.FC = () => {
 
                     </div>
                 </Dialog>
-            </Transition>
+            </Transition>}
         </>
     )
 }

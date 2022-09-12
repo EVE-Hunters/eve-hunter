@@ -51,8 +51,8 @@ export const useStatisticColors = (system: SolarSystemInterface) => {
     const average_24h = useMapStore((state) => state.average_24h);
     const average_delta = useMapStore((state) => state.average_delta);
 
-    const npc_1h_color = calculateColor(system.kill_stats_latest?.npc_kills ?? 0, average_1h)
-    const npc_24h_color = calculateColor(system.npc_24h, average_24h);
+    const npc_1h_color = calculateColor(system.system_kill_hour?.npc_kills ?? 0, average_1h)
+    const npc_24h_color = calculateColor(system.system_kill_day.npc_kills, average_24h);
     const npc_delta_color = calculateColor(system.npc_delta, average_delta);
 
     return [

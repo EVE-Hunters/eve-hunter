@@ -3,9 +3,9 @@ import ApplicationLayout from "../layouts/ApplicationLayout";
 
 
 const Home: React.FC = () => {
-    
+
     return (
-        <ApplicationLayout>
+        <>
             <div className="w-full border-b">
                 <h1 className="text-xl">Hunter Tool</h1>
 
@@ -17,8 +17,7 @@ const Home: React.FC = () => {
                     Hunt from the hunting page.
                 </div>
             </div>
-
-        </ApplicationLayout>
+        </>
     )
 }
 
