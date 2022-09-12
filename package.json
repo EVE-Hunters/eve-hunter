@@ -14,6 +14,7 @@
         "@types/underscore": "^1.11.4",
         "@typescript-eslint/eslint-plugin": "^5.33.0",
         "@typescript-eslint/parser": "^5.33.0",
+        "autoprefixer": "^10.4.9",
         "axios": "^0.25",
         "eslint": "^8.21.0",
         "eslint-plugin-react": "^7.30.1",

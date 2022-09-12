@@ -1,0 +1,1 @@
+import{j as e,F as r}from"./index.0acf707a.js";const i=()=>e(r,{children:e("div",{className:"w-full mt-4 flex justify-center",children:e("a",{href:"/auth/sso/redirect",children:e("img",{src:"/images/eve-sso-login-white-large.png"})})})});export{i as default};

@@ -1,0 +1,58 @@
+{
+  "resources/ts/index.tsx": {
+    "file": "assets/index.0acf707a.js",
+    "src": "resources/ts/index.tsx",
+    "isEntry": true,
+    "dynamicImports": [
+      "resources/ts/Pages/Login.tsx",
+      "resources/ts/Pages/Home.tsx",
+      "resources/ts/Pages/Account.tsx",
+      "resources/ts/Pages/Hunting.tsx"
+    ]
+  },
+  "resources/ts/Pages/Login.tsx": {
+    "file": "assets/Login.63dfb1e4.js",
+    "src": "resources/ts/Pages/Login.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/ts/index.tsx"
+    ]
+  },
+  "resources/ts/Pages/Home.tsx": {
+    "file": "assets/Home.4685503c.js",
+    "src": "resources/ts/Pages/Home.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/ts/index.tsx"
+    ]
+  },
+  "resources/ts/Pages/Account.tsx": {
+    "file": "assets/Account.23ed2a02.js",
+    "src": "resources/ts/Pages/Account.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/ts/index.tsx",
+      "_notify.628119f3.js"
+    ]
+  },
+  "_notify.628119f3.js": {
+    "file": "assets/notify.628119f3.js",
+    "imports": [
+      "resources/ts/index.tsx"
+    ]
+  },
+  "resources/ts/Pages/Hunting.tsx": {
+    "file": "assets/Hunting.059b8be9.js",
+    "src": "resources/ts/Pages/Hunting.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/ts/index.tsx",
+      "_notify.628119f3.js"
+    ]
+  },
+  "resources/css/app.css": {
+    "file": "assets/app.6aade1f2.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  }
+}
