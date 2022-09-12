@@ -2,13 +2,15 @@ name: Build NodeJS Files
 
 on:
   push:
-    branch: ["master"]
+    branches: 
+      - master
 
 jobs:
   build_an_deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        name: Checkout
       - name: Clean Install and build
         run: |
           npm ci
@@ -21,7 +23,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build and push
-        use: docker/build-push-action@v3
+        uses: docker/build-push-action@v3
         with:
           context: .
           push: true
