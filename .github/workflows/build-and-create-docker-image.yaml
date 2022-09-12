@@ -2,7 +2,8 @@ name: Build NodeJS Files
 
 on:
   push:
-    branch: ["master"]
+    branches: 
+      - master
 
 jobs:
   build_an_deploy:
@@ -21,7 +22,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build and push
-        use: docker/build-push-action@v3
+        uses: docker/build-push-action@v3
         with:
           context: .
           push: true
