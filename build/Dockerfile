@@ -37,6 +37,9 @@ RUN cd /var/www/eve-hunter && \
     chown -R www-data:www-data /var/www/eve-hunter && \
     php -r "file_exists('.env') || copy('.env.example', '.env');"
 
+RUN npm install && \
+    npm run build
+
 
 #COPY files/js /var/www/eve-hunter/public
 #COPY files/css /var/www/eve-hunter/public

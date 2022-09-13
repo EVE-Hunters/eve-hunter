@@ -9,14 +9,11 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet"/>
-        <script src="{{ asset('js/vendor.js')}}"></script>
-        <script src="{{ asset('js/manifest.js')}}"></script>
-        <script src="{{ asset("js/index.js") }}" defer></script>
+
     </head>
     <body>
         <div id="app"></div>
         @viteReactRefresh
-        @vite('resources/ts/index.tsx')
+        @vite(['resources/ts/index.tsx', 'resources/css/app.css'])
     </body>
 </html>
