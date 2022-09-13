@@ -2,7 +2,7 @@ name: Build NodeJS Files
 
 on:
   push:
-    branches: 
+    branches:
       - master
 
 jobs:
@@ -14,18 +14,16 @@ jobs:
         run: |
           npm ci
           npm run build
-      - name: Create Docker Image
-        run: docker build . --file ./build/Dockerfile --tag eve-hunter-app:$(date +%s)
       - name: Login to Dockerhub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Build and push
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v2
         with:
           context: .
+          file: ./build/Dockerfile
           push: true
-          repository: simplyunnamed/eve-hunter
-          tags: latest, ${{ github.run_number }}
+          tags: simplyunnamed/eve-hunter:latest, simplyunnamed/eve-hunter:${{github.run_number}}
 
