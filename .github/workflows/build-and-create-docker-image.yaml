@@ -17,6 +17,8 @@ jobs:
           envkey_VITE_PUSHER_APP_KEY: ${{ secrets.VITE_PUSHER_HOST }}
           envkey_VITE_PUSHER_APP_CLUSTER: ${{ secrets.VITE_PUSHER_HOST }}
           envkey_PUSHER_PORT: ${{ secrets.VITE_PUSHER_HOST }}
+      - name: do a thing
+        run: cat .env
       - name: Clean Install and build
         run: |
           npm ci
