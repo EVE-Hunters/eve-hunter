@@ -1,10 +1,6 @@
 
-import React, {useEffect, useMemo, useState} from 'react';
-import {Connection, SolarSystemInterface} from '../../../interfaces/Map/MapInterfaces';
-import {Line} from '@react-three/drei';
-import System from './System';
+import React, {useEffect} from 'react';
 import {useMapControls} from '../../../hooks/Map/useMapControls';
-import { useMapSettingsStore } from '../../../stores/Map/MapSettingsStore';
 import { useMapStore } from '../../../stores/Map/MapStore';
 import Paths from './Paths';
 import { useCalculateRoute } from '../../../hooks/Map/useRouteCalculator';

@@ -10,6 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+          envkey_VITE_PUSHER_HOST: ${{ secrets.VITE_PUSHER_HOST }}
+          envkey_VITE_PUSHER_APP_KEY: ${{ secrets.VITE_PUSHER_HOST }}
+          envkey_VITE_PUSHER_APP_CLUSTER: ${{ secrets.VITE_PUSHER_HOST }}
+          envkey_PUSHER_PORT: ${{ secrets.VITE_PUSHER_HOST }}
       - name: Clean Install and build
         run: |
           npm ci
