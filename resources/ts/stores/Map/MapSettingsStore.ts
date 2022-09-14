@@ -1,3 +1,4 @@
+import { Node } from "ngraph.graph";
 import create from "zustand";
 import { MapRenderSettings, SolarSystemInterface } from "../../interfaces/Map/MapInterfaces";
 
@@ -14,11 +15,12 @@ interface MapSettingsInterface{
     jumpRange: number,
     maxSecurity: number
     focusedSystem: SolarSystemInterface | null,
+    destination: SolarSystemInterface | null,
     toggleRangeSphere: () => void
     setJumpRange: (range: number) => void,
     setMaxSecurity: (sec: number) => void,
     setFocusedSystem: (system: SolarSystemInterface | null) => void,
-
+    setDestination: (system: SolarSystemInterface | null) => void,
     systemInfo: MapRenderSettings,
 
     toggleDelta: () => void,
@@ -27,6 +29,8 @@ interface MapSettingsInterface{
     toggleJumps: () => void,
     toggleSecurity: () => void,
 
+    highlightedRoute: Node<any>[] | null
+    setHighlightedRoute: (route: Node<any>[] | null) => void
 
     // filter settings
     minDelta: filterSetting,
@@ -51,6 +55,9 @@ export const useMapSettingsStore = create<MapSettingsInterface>((set) => ({
     maxSecurity: 100,
 
     focusedSystem: null,
+    destination: null,
+
+    setDestination: (system) => set((state) => ({destination: system})),
 
 
     toggleRangeSphere: () => set((state: any) => ({showRangeSphere: !state.showRangeSphere})),
@@ -73,6 +80,10 @@ export const useMapSettingsStore = create<MapSettingsInterface>((set) => ({
     toggleNpc24h: () => set((state) => ({systemInfo: { ...state.systemInfo, npc24h: !state.systemInfo.npc24h}})),
     toggleJumps: () => set((state) => ({systemInfo: { ...state.systemInfo, jumps: !state.systemInfo.jumps}})),
     toggleSecurity: () => set((state) => ({systemInfo: { ...state.systemInfo, security: !state.systemInfo.security}})),
+
+    highlightedRoute: null,
+    setHighlightedRoute: (route) => set((state) => ({highlightedRoute: route})),
+
 
     //filter settings
     minDelta: null,

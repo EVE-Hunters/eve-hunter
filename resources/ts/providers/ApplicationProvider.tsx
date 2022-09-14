@@ -1,15 +1,16 @@
 import React from 'react'
-import { useHuntingCharacters, useMainCharacter } from '../stores/account/CharacterStore';
 
-interface ApplicationProviderProps extends React.PropsWithChildren<HTMLDivElement> {
+
+interface ApplicationProviderProps extends React.HTMLAttributes<HTMLDivElement> {
 
 }
 
 const ApplicationProvider: React.FC<ApplicationProviderProps> = ({...props}) => {
 
-
     return (
-        <></>
+        <>
+        {props.children}
+        </>
     )
 }
 export default ApplicationProvider

@@ -1,7 +1,8 @@
-import React, { PropsWithChildren, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import Sidebar from "../Sidebar";
 import {useAuth} from "../../hooks/useAuth";
 import { Outlet, useNavigate } from 'react-router-dom';
+
 
 
 
@@ -33,6 +34,7 @@ const ApplicationLayout: React.FC = () => {
         navigate('/login')
 
     return (
+
         <div className="w-full h-full flex">
             <Sidebar/>
 

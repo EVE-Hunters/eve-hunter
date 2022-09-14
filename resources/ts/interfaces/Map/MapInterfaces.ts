@@ -34,8 +34,8 @@ export interface SolarSystemInterface {
     name: string,
     constellation: ConstellationInterface,
     region: RegionInterface
-    connections: SystemConnection[],
     system_jumps: SystemJumpStatsInterface,
+    connections: SystemConnection[],
     ice: boolean,
     security: number,
     jumps?: number,
@@ -43,19 +43,40 @@ export interface SolarSystemInterface {
     x: number,
     y: number,
     z: number,
-
     //stats
     npc_delta: number,
     system_kill_day: SystemKillStatsInterface,
     system_kill_hour: SystemKillStatsInterface,
-    /*kill_24h: SystemKillStatsInterface[],
-    kill_stats_latest: SystemKillStatsInterface,
-    latest_system_jumps: SystemJumpStatsInterface,
-    npc_24h: number,
-    npc_delta: number,*/
+
 }
 
-export type ISolarSystem = Omit<SolarSystemInterface, "distance"|"jumps"|"connections"|"npc_delta"|"system_kill_day"|"system_kill_hour">
+export interface ISolarSystem {
+    system_id: number,
+    constellation_id: number,
+    region_id: number,
+    name: string,
+    ice: boolean,
+    security: number,
+    constellation: ConstellationInterface,
+    region: RegionInterface,
+    x: number,
+    y: number,
+    z: number,
+}
+
+export interface SolarSystemWithStats extends ISolarSystem {
+    npc_delta: number,
+    system_kill_day: SystemKillStatsInterface,
+    system_kill_hour: SystemKillStatsInterface,
+    system_jumps: SystemJumpStatsInterface,
+}
+
+export interface SolarSystemWithConnections extends ISolarSystem {
+    gates?: ISolarSystemGate[],
+    connections?: SolarSystemWithConnections[],
+}
+
+//export type ISolarSystem = Omit<SolarSystemInterface, "distance"|"jumps"|"connections"|"npc_delta"|"system_kill_day"|"system_kill_hour">
 
 export interface ISolarSystemGate {
     fromRegionID: number,

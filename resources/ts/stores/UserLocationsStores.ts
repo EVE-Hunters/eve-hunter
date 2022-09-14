@@ -18,6 +18,7 @@ export const useCharacterLocations = create<CharacterLocationsStore>((set)=>({
         console.time('character-location-update')
         let inhabitants = state.SolarSystemInhabitants;
         let current_system_id = null;
+
         Object.keys(inhabitants).every(key => {
             if(inhabitants[key].findIndex(char => char.character_id == loc.character.character_id) >= 0){
                 current_system_id = key;

@@ -24,10 +24,12 @@ const CharacterProvider: React.FC<CharacterProviderInterface> = ({children, fini
     const [ huntingCharacters, setHuntingCharacters ] = useState<number[]>([]);
 
     const updateHuntingCharacters = (chars: number[]) => {
+        console.log('updating hunters');
         setHuntingCharacters(chars);
     }
 
     const updateMainCharacter = (char: CharacterInterface) => {
+        console.log('updaiting char');
         setMainCharacter(char);
     }
 
@@ -47,6 +49,7 @@ const CharacterProvider: React.FC<CharacterProviderInterface> = ({children, fini
                     reloadIdentity()
                 });
         },500)
+
     }, [mainCharacter])
 
     useEffect(() => {

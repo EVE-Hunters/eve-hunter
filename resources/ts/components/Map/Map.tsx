@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import {Canvas} from '@react-three/fiber';
 import EveMap from './three/EveMap';
 import JumpRange from './three/JumpRange';
@@ -10,7 +10,12 @@ import {useCharacters} from '../../hooks/useCharacters';
 import HuntingApi from '../../httpClient/HuntingApi';
 import { useMapStore } from '../../stores/Map/MapStore';
 import { useMapSettingsStore } from '../../stores/Map/MapSettingsStore';
-
+import { useCalculateRoute } from '../../hooks/Map/useRouteCalculator';
+import HighLightedRouteCount from './three/HighLightedRouteCount';
+import { PerspectiveCamera } from '@react-three/drei';
+import { useSetDestinationApi } from '../../hooks/Location/useSetDestinationApi';
+import { useContextBridge } from '@react-three/drei';
+import { AuthContext } from '../../contexts/AuthContext';
 
 const Map: React.FC = () => {
 
@@ -22,6 +27,9 @@ const Map: React.FC = () => {
 	const toggleNpc24h = useMapSettingsStore((state) => state.toggleNpc24h);
 	const toggleJumps = useMapSettingsStore((state) => state.toggleJumps);
 	const toggleSecurity = useMapSettingsStore((state) => state.toggleSecurity);
+    const SetDestination = useSetDestinationApi('MAP');
+    const ContextBridge = useContextBridge(AuthContext)
+
 
 	const {HuntingSystem, NearBySystems, Connections} = useMapStore((state) => ({
 		HuntingSystem: state.HuntingSystem,
@@ -30,12 +38,16 @@ const Map: React.FC = () => {
 	}));
 
 
+
+
+
+
 	//const {SourceSystem, nearBySystems, connections} = useHuntingLocationContext()
 	const {huntingCharacters} = useCharacters();
 
 	const SetDestinationHome = () => {
 		if(HuntingSystem)
-			HuntingApi.setDestination(HuntingSystem.system_id, huntingCharacters);
+			SetDestination(HuntingSystem)
 	};
 
 
@@ -79,13 +91,16 @@ const Map: React.FC = () => {
 			</div>
 			<div className="bg-black h-[600px]">
 				<div className="flex h-full">
-					<div className="w-9/12 h-full">
+					<div className="w-9/12 h-full relative">
 						<Canvas
-							camera={{
+
+							/*camera={{
 								fov: 50,
 								position: [HuntingSystem?.x ?? 0 + 1, HuntingSystem?.y ?? 0 + 1, HuntingSystem?.z ?? 0 + 1]
-							}}
+							}}*/
 							dpr={[1, 2]}>
+                            <ContextBridge>
+                            <PerspectiveCamera makeDefault fov={50} position={[HuntingSystem?.x ?? 0 + 1, HuntingSystem?.y ?? 0 + 1, HuntingSystem?.z ?? 0 + 1]} />
 							<ambientLight/>
 
 							<pointLight position={[10, 10, 10]}/>
@@ -96,7 +111,9 @@ const Map: React.FC = () => {
 								<JumpRange position={[0, 0, 0]}/>
 							</ControlsProvider>
 							<Skybox/>
+                            </ContextBridge>
 						</Canvas>
+                        <HighLightedRouteCount />
 					</div>
 					<div className="w-3/12">
 						<HunterNotifications />

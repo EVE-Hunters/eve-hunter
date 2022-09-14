@@ -20,7 +20,7 @@ const AuthProvider: React.FC = ({children}) => {
 	const [user, setUser] = useState<UserInterface | null>(null);
 	const [isInitializing, setIsInitializing] = useState<boolean>(true);
     const [ characters, setCharacters ] = useState<CharacterInterface[]>([])
-    const [ mainCharacter, setMainCharacter ] = useState<CharacterInterface|null>(null)
+    const [ mainCharacterId, setMainCharacterId ] = useState<number|null>(null)
     const [ huntingCharacters, setHuntingCharacters ] = useState<number[]>([]);
 
 
@@ -37,21 +37,8 @@ const AuthProvider: React.FC = ({children}) => {
         let main = response.characters.find(character => character.character_id === user?.main_character_id) ?? null
         let hunters = response.hunters.map(character => character.character_id);
         console.log('main character:', main)
-        setMainCharacter(main)
+        //setMainCharacterId(main?.character_id ?? null)
         setHuntingCharacters(hunters)
-
-
-       /* AuthApi.characters().then(response => {
-            setCharacters(response.characters)
-            let main = response.characters.find(character => character.character_id === user?.main_character_id) ?? null
-            let hunters = response.hunters.map(character => character.character_id);
-            console.log('main character:', main)
-            setMainCharacter(main)
-            setHuntingCharacters(hunters)
-        }).finally( () => {
-            finished && finished()
-        })*/
-
     }
 
 
@@ -65,11 +52,16 @@ const AuthProvider: React.FC = ({children}) => {
 	};
 
     const updateHuntingCharacters = (chars: number[]) => {
-        setHuntingCharacters(chars);
+        AccountApi.synHunters(chars).then(() => {
+            setHuntingCharacters(chars);
+        })
+
     }
 
     const updateMainCharacter = (char: CharacterInterface) => {
-        setMainCharacter(char);
+        AccountApi.makeMainCharacter(char.character_id).then(()=>{
+            setMainCharacterId(char.character_id);
+        });
     }
 
     const removeCharacter = (character: CharacterInterface) => {
@@ -86,14 +78,15 @@ const AuthProvider: React.FC = ({children}) => {
 		AuthApi.identity().then(async (response) => {
 			// Set the authenticated user and the authentication stats
 			setUser(response.user);
+            setMainCharacterId(response.user.main_character_id);
 
             //Load Characters
             getCharacters();
 
             //load Sde
-            let sdeResponse = await SdeClientApi.fetchSde();
-            setSystems(sdeResponse.systems)
-            setGates(sdeResponse.gates)
+            //let sdeResponse = await SdeClientApi.fetchSde();
+            //setSystems(sdeResponse.systems)
+            //setGates(sdeResponse.gates)
 
 
 
@@ -116,7 +109,7 @@ const AuthProvider: React.FC = ({children}) => {
 		reloadIdentity: getCurrentIdentity,
 		SetCurrentChannel,
         characters,
-        mainCharacter,
+        mainCharacter: characters.find(x => x.character_id == mainCharacterId),
         huntingCharacters,
         updateHuntingCharacters,
         updateMainCharacter,
@@ -142,9 +135,9 @@ const AuthProvider: React.FC = ({children}) => {
 
 	return (
 		<AuthContext.Provider value={value}>
-            <ChannelsProvider>
-                {children}
-            </ChannelsProvider>
+                <ChannelsProvider>
+                    {children}
+                </ChannelsProvider>
 		</AuthContext.Provider>
 	);
 };

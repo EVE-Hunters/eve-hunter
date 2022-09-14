@@ -1,4 +1,4 @@
-import {Connection, SolarSystemInterface} from '../../interfaces/Map/MapInterfaces';
+import {Connection, SolarSystemInterface, SolarSystemWithStats} from '../../interfaces/Map/MapInterfaces';
 import create from 'zustand';
 import { countBy, get } from 'underscore';
 

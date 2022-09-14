@@ -21,9 +21,10 @@ const App: React.FC = () => {
 	return (
 		<div className="h-screen bg-gray-400">
 			<Toaster />
-			<AuthProvider>
-				{_routes}
-			</AuthProvider>
+            <AuthProvider>
+			    {_routes}
+            </AuthProvider>
+
 		</div>
 	);
 };

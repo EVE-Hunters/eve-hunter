@@ -7,29 +7,24 @@ import {useMapControls} from '../../../hooks/Map/useMapControls';
 import { useMapSettingsStore } from '../../../stores/Map/MapSettingsStore';
 import { useMapStore } from '../../../stores/Map/MapStore';
 import Paths from './Paths';
-
+import { useCalculateRoute } from '../../../hooks/Map/useRouteCalculator';
+import Systems from './Systems';
 
 
 const EveMap: React.FC = () => {
 
 	const { setCoordinates } = useMapControls();
-	const jumpRange = useMapSettingsStore((state)=>state.jumpRange);
-	const maxSecurity = useMapSettingsStore((state)=>state.maxSecurity);
 
-	const {HuntingSystem, NearBySystems, Connections} = useMapStore((state) => ({
+
+	const {HuntingSystem} = useMapStore((state) => ({
 		HuntingSystem: state.HuntingSystem,
 		NearBySystems: state.NearBySystems,
 		Connections: state.Connections
 	}));
 
-	const _nearBySystems = useMemo(() => {
-		return NearBySystems;
-	}, [NearBySystems]);
 
-	const _connection = useMemo(() => {
-		return Connections;
-	}, [Connections]);
 
+    useCalculateRoute();
 
 	const SetCameraPosition = () => {
 
@@ -45,25 +40,8 @@ const EveMap: React.FC = () => {
 
 	return (
 		<>
-
-
-			{HuntingSystem && _nearBySystems.filter(s => (s.jumps ?? 0) <= jumpRange).map((s, i) => {
-				if(s.security > maxSecurity/100) return null;
-				return (<System system={s} source={HuntingSystem} key={s.system_id} position={[s.x, s.y, s.z]}/>);
-			})}
-
+			<Systems/>
             <Paths />
-			{/* {_connection.filter(s=> (s.jumps ?? 0) < jumpRange).map((c, i) => {
-				if(c.system1.security > maxSecurity/100 || c.system2.security > maxSecurity/100) return null;
-				return (<Line key={i}
-					points={[[c.system1.x, c.system1.y, c.system1.z], [c.system2.x, c.system2.y, c.system2.z]]}
-					color={c.jumps <= jumpRange ? 'green' : 'red'}
-					lineWidth={1}>
-
-				</Line>);
-			})} */}
-
-
 		</>
 	);
 };

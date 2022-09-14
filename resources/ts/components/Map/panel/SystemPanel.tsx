@@ -2,14 +2,13 @@ import React from 'react';
 import {SolarSystemInterface} from "../../../interfaces/Map/MapInterfaces";
 
 import {HiPaperAirplane} from "../../Icons/HeroIcons/HiPaperAirplane";
-import HuntingApi from "../../../httpClient/HuntingApi";
 import HunterDisplay from "../HunterDisplay";
-import {useCharacters} from "../../../hooks/useCharacters";
 import { useMapSettingsStore } from '../../../stores/Map/MapSettingsStore';
 import { useStatisticColors } from '../../../hooks/Map/useStatisticColors';
 import Broadcaster from '../../../events/Broadcaster';
 import useSystemSecurityColor from '../../../hooks/Map/useSystemSecurityColor'
-import notify from '../../../helpers/notify';
+
+import { useSetDestinationApi } from '../../../hooks/Location/useSetDestinationApi';
 
 interface SystemPanelInterface {
     system: SolarSystemInterface
@@ -19,14 +18,12 @@ interface SystemPanelInterface {
 const SystemPanel: React.FC<SystemPanelInterface> = ({system, rtn}) => {
 
     //const focusedSystem = useMapSettingsStore((state) => state.focusedSystem);
-    const {huntingCharacters} = useCharacters();
     const setFocusedSystem = useMapSettingsStore((state) => state.setFocusedSystem);
     const [npc_1h_color, npc_24h_color, npc_delta_color] = useStatisticColors(system);
     const systemSecurityColor = useSystemSecurityColor(system);
+    const SetDestination = useSetDestinationApi();
 
-    const SetDestination = () => {
-        HuntingApi.setDestination(system.system_id, huntingCharacters)
-    }
+
 
     const focusOnSystem = () => {
         let event = `system.${system.system_id}.focus`;
@@ -81,7 +78,7 @@ const SystemPanel: React.FC<SystemPanelInterface> = ({system, rtn}) => {
                         <img src="/images/zkillboard.png" alt="zkillboard" className="w-4 h-4 rounded-full"/>
                     </a>
                     <div className="ml-auto"/>
-                    <button className="text-green-500" onClick={SetDestination}>
+                    <button className="text-green-500" onClick={() => SetDestination(system)}>
                         <HiPaperAirplane className="h-4 w-4 transform rotate-90"/>
                     </button>
                 </div>

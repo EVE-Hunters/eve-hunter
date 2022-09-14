@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Connection, SolarSystemInterface } from '../../interfaces/Map/MapInterfaces';
 import { useMapStore } from '../../stores/Map/MapStore';
 import createGraph, {Graph} from 'ngraph.graph';
@@ -26,47 +26,53 @@ const generateGraph = (NearBySystems: SolarSystemInterface[], Connections: Conne
 };
 
 
+const generateRoute = (connectionGraph: Graph, source?: SolarSystemInterface | null, destination?: SolarSystemInterface | null) => {
+    let route = [];
+    if(!source || !destination)
+        return null
+
+    const pathfinder = path.aStar(connectionGraph, {
+        distance: (fromNode, toNode, link) => {
+            return Math.sqrt(
+                Math.pow(fromNode.data.x - toNode.data.x, 2) +
+                Math.pow(fromNode.data.y - toNode.data.y, 2) +
+                Math.pow(fromNode.data.z - toNode.data.z, 2)
+            )
+        },
+        heuristic: (fromNode, toNode) => {
+            return Math.sqrt(
+                Math.pow(fromNode.data.x - toNode.data.x, 2) +
+                Math.pow(fromNode.data.y - toNode.data.y, 2) +
+                Math.pow(fromNode.data.z - toNode.data.z, 2)
+            )
+        },
+    });
+    route = pathfinder.find(source.system_id, destination.system_id);
+    return route;
+}
+
+
 
 
 export const useCalculateRoute = () => {
     const FocusedSystem = useMapSettingsStore((state) => state.focusedSystem);
+    const Destination = useMapSettingsStore((state) => state.destination);
+    const setHighlightedRoute = useMapSettingsStore((state) => state.setHighlightedRoute);
 	const {HuntingSystem, NearBySystems, Connections} = useMapStore((state) => ({
 		HuntingSystem: state.HuntingSystem,
 		NearBySystems: state.NearBySystems,
 		Connections: state.Connections
 	}));
 
-	const connectionGraph = useMemo<Graph>(() => {
+    const connectionGraph = useMemo<Graph>(() => {
 		const graph = generateGraph(NearBySystems, Connections);
 		console.log('graph:', graph);
 		return graph;
 	}, [NearBySystems]);
 
-	const route = useMemo(() => {
-        let route = [];
-        if(!FocusedSystem || !HuntingSystem){
-            return null;
-        }
-        const pathfinder = path.aStar(connectionGraph, {
-            distance: (fromNode, toNode, link) => {
-                return Math.sqrt(
-                    Math.pow(fromNode.data.x - toNode.data.x, 2) +
-                    Math.pow(fromNode.data.y - toNode.data.y, 2) +
-                    Math.pow(fromNode.data.z - toNode.data.z, 2)
-                )
-            },
-            heuristic: (fromNode, toNode) => {
-                return Math.sqrt(
-                    Math.pow(fromNode.data.x - toNode.data.x, 2) +
-                    Math.pow(fromNode.data.y - toNode.data.y, 2) +
-                    Math.pow(fromNode.data.z - toNode.data.z, 2)
-                )
-            },
-        });
-        route = pathfinder.find(HuntingSystem.system_id, FocusedSystem.system_id);
-        console.log('path:',route);
-		return route;
-	}, [HuntingSystem, connectionGraph, FocusedSystem]);
+    useEffect(() => {
+        setHighlightedRoute(generateRoute(connectionGraph, HuntingSystem, FocusedSystem));
+    }, [HuntingSystem, connectionGraph, FocusedSystem])
 
-	return route;
+
 };

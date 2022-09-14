@@ -8,16 +8,13 @@ import { useMapStore } from '../stores/Map/MapStore';
 import useUserTracking from '../hooks/Map/useUserTracking';
 import useHunterLocations from '../hooks/Map/useHunterLocations';
 import LocationApi from '../httpClient/LocationApi';
-import { Connection, ISolarSystem, ISolarSystemGate, SolarSystemInterface } from '../interfaces/Map/MapInterfaces';
+import { Connection, ISolarSystem, ISolarSystemGate, SolarSystemInterface, SolarSystemWithConnections } from '../interfaces/Map/MapInterfaces';
 import HunterNotifications from '../components/HunterNotifications';
 import SystemSearch from '../components/Map/Controls/SystemSearch';
 import useSdeStore from '../stores/sde/SdeStore';
 import { Data3DTexture } from 'three';
-
-interface SolarSystem extends Omit<SolarSystemInterface, "connections"> {
-    gates: ISolarSystemGate[],
-    connections: ISolarSystem[],
-}
+import { useMapUtils } from '../hooks/Map/useMapUtils';
+import axios from 'axios';
 
 const Hunting: React.FC = () => {
 
@@ -26,8 +23,8 @@ const Hunting: React.FC = () => {
     const NearBySystems = useMapStore((state) => state.NearBySystems)
 
     const mapEnabled = useMapStore((state) => state.mapEnabled)
-
     const sde = useSdeStore();
+    const { getGatesAndConnections } = useMapUtils();
 
     //Enables and disables tracking of a user.
     useUserTracking()
@@ -35,54 +32,56 @@ const Hunting: React.FC = () => {
     //Tracks hunter locations and destination messages
     useHunterLocations()
 
-    const getSystemsWithinRange = () => {
+    /*const getSystemsWithinRange = () => {
         if(!HuntingSystem) return null;
 
+        //Setup first system
+        const [ hGates, hConnections ] = getGatesAndConnections(HuntingSystem);
+        const stageSystem: SolarSystemWithConnections = {
+            gates: hGates,
+            connections: hConnections,
+            ...HuntingSystem
+        }
+
         let visited: number[] = [HuntingSystem?.system_id];
-        let systems: SolarSystemInterface[] = [];
-        let currentSystems = [HuntingSystem];
+        let systems: SolarSystemWithConnections[] = [stageSystem];
+        let currentSystems: SolarSystemWithConnections[] = [stageSystem];
 
 
         for(let i = 0; i <= MapStore.range; i++){
 
-            let _systems: SolarSystem[] = currentSystems.map((system) => {
-                let connections = sde.gates.filter(x => x.fromSolarSystemID == system.system_id);
+            let _systems: SolarSystemWithConnections[] = currentSystems.map((system) => {
 
-                let _system: SolarSystem = {
+                const [ gates, connections ] = getGatesAndConnections(system);
+
+
+                let _system: SolarSystemWithConnections = {
                     ...system,
-                    gates: connections,
-                    connections: sde.systems.filter(x => connections.map(t => t.toSolarSystemID).includes(x.system_id))
+                    gates,
+                    connections
                 }
                 return _system;
             })
 
-
-
+            const nextSystems = _systems.map(x => x.connections ?? []).flat();
+            const unique = nextSystems.filter(sys => !visited.includes(sys.system_id));
+            visited = [...visited, ...unique.map(x => x.system_id)];
+            systems = [...systems, ...unique];
+            currentSystems = unique;
         }
 
+        //const getSystemStats = await axios.
 
+        //MapStore.setNearBysystems(systems);
 
-        /*for(let i = 0; i <= MapStore.range; i++){
-
-
-
-            let connection = currentSystems.map(system => {
-                return sde.gates.filter(gate => gate.fromSolarSystemID === system.system_id);
-            }).flat();
-
-            let destinations = sde.systems.filter(x => connection.map(x => x.toSolarSystemID).includes(x.system_id) && !visited.includes(x.system_id))
-
-
-            console.log(connection, destinations);
-        }*/
-    }
+    }*/
 
     useEffect(() => {
         MapStore.reset()
 
         if(HuntingSystem != null){
-            getSystemsWithinRange()
-            /*LocationApi.getNearbySystems({jumps: MapStore.range}, HuntingSystem.system_id).then((data) => {
+            //getSystemsWithinRange()
+            LocationApi.getNearbySystems({jumps: MapStore.range}, HuntingSystem.system_id).then((data) => {
                 let _systems: SolarSystemInterface[] = [];
                 data.forEach(sys => {
                     if(sys.system_id != HuntingSystem.system_id){
@@ -96,7 +95,7 @@ const Hunting: React.FC = () => {
                     _systems.push(sys);
                 })
                 MapStore.setNearBysystems(_systems);
-            })*/
+            })
         }
 
     }, [HuntingSystem])

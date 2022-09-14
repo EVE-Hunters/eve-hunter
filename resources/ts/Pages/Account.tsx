@@ -1,6 +1,4 @@
 import React from 'react';
-
-import ApplicationLayout from "../layouts/ApplicationLayout";
 import CharacterManager from "../components/CharacterManager";
 import ChannelManager from "../components/ChannelManager/ChannelManager";
 import AvailableChannels from "../components/AvailableChannels";

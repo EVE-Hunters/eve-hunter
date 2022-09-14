@@ -4,8 +4,6 @@ import { Html} from '@react-three/drei';
 import {useFrame, useThree} from '@react-three/fiber';
 import {useMapControls} from '../../../hooks/Map/useMapControls';
 import {HiPaperAirplane} from '../../Icons/HeroIcons/HiPaperAirplane';
-import {useCharacters} from '../../../hooks/useCharacters';
-import HuntingApi from '../../../httpClient/HuntingApi';
 import { useMapSettingsStore } from '../../../stores/Map/MapSettingsStore';
 import { get } from 'underscore';
 import Broadcaster from '../../../events/Broadcaster';
@@ -13,6 +11,7 @@ import useSystemSecurityColor from '../../../hooks/Map/useSystemSecurityColor';
 import { useStatisticColors } from '../../../hooks/Map/useStatisticColors';
 import { useCharacterLocations } from '../../../stores/UserLocationsStores';
 import { useMapStore } from '../../../stores/Map/MapStore';
+import { useSetDestinationApi } from '../../../hooks/Location/useSetDestinationApi';
 
 
 type meshElement = JSX.IntrinsicElements['mesh']
@@ -26,6 +25,8 @@ const System: React.FC<SystemComponentInterface> = ({source, system, ...props}) 
 
 	const renderSettings = useRef<MapRenderSettings>(useMapSettingsStore.getState().systemInfo);
 	const HuntingSystem = useMapStore((state) => state.HuntingSystem);
+
+    const SetDestination = useSetDestinationApi('System');
 
 	const [isFocused, setIsFocused] = useState<boolean>(false);
 	const [isGrowing, setIsGrowing] = useState<boolean>(true);
@@ -57,13 +58,13 @@ const System: React.FC<SystemComponentInterface> = ({source, system, ...props}) 
 	const [hovered, setHovered] = useState<boolean>(false);
 	const focusedSystem = useMapSettingsStore((state) => state.focusedSystem);
 	const setFocusedSystem = useMapSettingsStore((state) => state.setFocusedSystem);
-	const {huntingCharacters} = useCharacters();
 	const securityTextColor = useSystemSecurityColor(system);
 	const {setCoordinates, currentCenter} = useMapControls();
 	const [npc_1h_color, npc_24h_color, npc_delta_color] = useStatisticColors(system);
 	const inhabitants = useCharacterLocations(state => state.SolarSystemInhabitants[system.system_id] ?? []);
 	const inRangeLy: boolean = (system?.distance ?? 0) < 8;
 	const defaultRadius = HuntingSystem?.system_id === system.system_id ? 0.05 : 0.025;
+
 	//new method
 
 
@@ -87,7 +88,7 @@ const System: React.FC<SystemComponentInterface> = ({source, system, ...props}) 
 		}
 
 		const _r = isGrowing ? radius+0.001 : radius-0.001;
-		if(_r >= 0.09){
+		if(_r >= 0.07){
 			setIsGrowing(false);
 
 		}
@@ -152,11 +153,6 @@ const System: React.FC<SystemComponentInterface> = ({source, system, ...props}) 
 		setFocusedSystem(null);
 	};
 
-	const SetDestination = () => {
-		HuntingApi.setDestination(system.system_id, huntingCharacters);
-	};
-
-
 	return (
 		<mesh
 			{...props}
@@ -167,11 +163,11 @@ const System: React.FC<SystemComponentInterface> = ({source, system, ...props}) 
 			onPointerOut={handleHoverOff}
 		>
 			<sphereGeometry args={[radius, 32, 32]} />
-			<meshStandardMaterial color={sphereColor} fog={false} transparent={true} opacity={0.5}></meshStandardMaterial>
+			<meshStandardMaterial color={sphereColor} fog={false} transparent={true} opacity={0.9}></meshStandardMaterial>
 
 			{isFocused ? <Html distanceFactor={4} pointerEvents="none" className="relative" style={{position:'relative'}}>
-				<div className="-mt-3 ml-5 flex rounded text-xs font-thin bg-black/75 p-0.5 ">
-					<div className="text-white relative select-none break-normal flex-nowrap" onPointerOver={handleHoverOn} onPointerOut={handleHoverOff}>
+				<div className="-mt-3 ml-5 flex rounded text-xs font-thin bg-black/75 p-0.5 " onPointerOver={handleHoverOn} onPointerOut={handleHoverOff}>
+					<div className="text-white relative select-none break-normal flex-nowrap" >
 						<div className="m-0 px-1  hover:text-blue-500 hover:font-semibold flex" onClick={CenterCamera}>
 							<span className="pr-2">{system.name}</span>
 							<div className="ml-auto"></div>
@@ -210,7 +206,7 @@ const System: React.FC<SystemComponentInterface> = ({source, system, ...props}) 
 
 					</div>
 					<div className="py-1 px-0.5">
-						<div className="w-4 text-green-500 cursor-pointer" onClick={() => SetDestination()}>
+						<div className="w-4 text-green-500 cursor-pointer" onClick={() => SetDestination(system)}>
 							<HiPaperAirplane className="w-3 h-3 transform rotate-90"  />
 						</div>
 					</div>
@@ -218,8 +214,8 @@ const System: React.FC<SystemComponentInterface> = ({source, system, ...props}) 
 
 
 			</Html> : <Html distanceFactor={2} pointerEvents="none" className="relative" style={{position:'relative'}}>
-				<div className="-mt-3 ml-5 flex rounded text-xs font-thin bg-black/75 p-0.5 ">
-					<div className="text-white relative select-none break-normal flex-nowrap" onPointerOver={handleHoverOn} onPointerOut={handleHoverOff}>
+				<div className="-mt-3 ml-5 flex rounded text-xs font-thin bg-black/75 p-0.5 " onPointerOver={handleHoverOn} onPointerOut={handleHoverOff}>
+					<div className="text-white relative select-none break-normal flex-nowrap" >
 						<div className="m-0 px-1  hover:text-blue-500 hover:font-semibold flex" onClick={CenterCamera}>
 							<span className="pr-2">{system.name}</span>
 							<div className="ml-auto"></div>
@@ -258,7 +254,7 @@ const System: React.FC<SystemComponentInterface> = ({source, system, ...props}) 
 
 					</div>
 					<div className="py-1 px-0.5">
-						<div className="w-4 text-green-500 cursor-pointer" onClick={() => SetDestination()}>
+						<div className="w-4 text-green-500 cursor-pointer" onClick={() => SetDestination(system)}>
 							<HiPaperAirplane className="w-3 h-3 transform rotate-90"  />
 						</div>
 					</div>

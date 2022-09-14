@@ -10,6 +10,7 @@ const HunterSelector: React.FC = () => {
     const {characters, huntingCharacters, updateHuntingCharacters} = useCharacters();
 
     const toggleCharacterSelected = (character_id: number) => {
+
         if (huntingCharacters.includes(character_id)) {
             updateHuntingCharacters(huntingCharacters.filter(id => id != character_id));
         } else {

@@ -6,7 +6,7 @@ import { useMapSettingsStore } from '../../../stores/Map/MapSettingsStore';
 import { useMapStore } from '../../../stores/Map/MapStore';
 import SystemConnection from './SystemConnection';
 
-type PathsProps = React.PropsWithChildren<HTMLDivElement>
+type PathsProps = React.HTMLAttributes<HTMLDivElement>
 
 
 
@@ -15,13 +15,14 @@ const Paths: React.FC<PathsProps> = ({...props}) => {
 	const FocusedSystem = useMapSettingsStore((state) => state.focusedSystem);
 	const jumpRange = useMapSettingsStore((state)=>state.jumpRange);
 	const maxSecurity = useMapSettingsStore((state)=>state.maxSecurity);
+    const HighlightedRoute = useMapSettingsStore((state) => state.highlightedRoute);
 	const {HuntingSystem, NearBySystems, Connections} = useMapStore((state) => ({
 		HuntingSystem: state.HuntingSystem,
 		NearBySystems: state.NearBySystems,
 		Connections: state.Connections
 	}));
 
-    const HighlightedRoute = useCalculateRoute();
+    //const HighlightedRoute = useCalculateRoute();
 
     const isInPath = (system1: SolarSystemInterface, system2: SolarSystemInterface): boolean => {
         let systems: number[] = [system1.system_id, system2.system_id];
