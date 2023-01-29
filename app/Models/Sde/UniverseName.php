@@ -23,10 +23,10 @@ class UniverseName extends Model
     ];
 
 
-    public function category(): Attribute
-    {
-        return Attribute::get(function ($val){
-            return \Str::plural($val);
-        });
-    }
+    // public function category(): Attribute
+    // {
+    //     return Attribute::get(function ($val){
+    //         return \Str::plural($val);
+    //     });
+    // }
 }

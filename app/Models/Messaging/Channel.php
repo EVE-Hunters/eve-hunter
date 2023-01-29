@@ -2,6 +2,7 @@
 
 namespace App\Models\Messaging;
 
+use App\Models\Character\CharacterInfo;
 use App\Models\Sde\SolarSystem;
 use App\Models\Sde\UniverseName;
 use App\Models\User;
@@ -28,8 +29,8 @@ class Channel extends Model
 
     public function access()
     {
-        return $this->belongsToMany(UniverseName::class, 'channel_access', 'channel_id','entity_id','id','entity_id');
-        //return $this->hasMany(ChannelAccess::class, 'channel_id','id');
+        return $this->hasMany(ChannelAccess::class);
+        //return $this->morphTo();
     }
 
     public function staging_system(): \Illuminate\Database\Eloquent\Relations\BelongsTo

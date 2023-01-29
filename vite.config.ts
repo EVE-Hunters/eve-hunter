@@ -5,7 +5,6 @@ import laravel from 'laravel-vite-plugin';
 // https://vitejs.dev/config/
 export default defineConfig({
     server: {
-        host: '0.0.0.0',
         hmr: {
             host: 'localhost'
         }
@@ -13,8 +12,7 @@ export default defineConfig({
     plugins: [
         react(),
         laravel({
-            input: ['resources/ts/index.tsx', 'resources/css/app.css'],
-
+            input: ['resources/scripts/app.tsx'],
             refresh: true,
         }),
     ]

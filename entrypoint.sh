@@ -38,6 +38,7 @@ function cache_config(){
 function webserver_start(){
     echo "Migrating";
     php artisan migrate --force
+    php artisan hunters:sde:file-cache
 
     cache_config
 

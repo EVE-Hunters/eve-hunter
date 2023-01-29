@@ -145,4 +145,10 @@ class SolarSystem extends \LaravelEveTools\EveSeeder\Models\Sde\SolarSystem
         );
     }
 
+    public function toArray(){
+        $ret = parent::toArray();
+        $ret['isWormhole'] = $this->isAnoikis;
+        return $ret;
+    }
+
 }

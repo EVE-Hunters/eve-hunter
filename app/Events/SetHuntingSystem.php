@@ -26,7 +26,7 @@ class SetHuntingSystem implements ShouldBroadcast
     public function broadcastWith()
     {
         return [
-            'system' => $this->system
+            'system_id' => $this->system->getKey()
         ];
     }
 

@@ -36,6 +36,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'main_character_id',
+        'primary_hunter'
     ];
 
     /**
@@ -65,6 +66,12 @@ class User extends Authenticatable
     public function refresh_tokens(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(RefreshToken::class);
+    }
+
+
+    public function main_refresh_token(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(RefreshToken::class, 'main_character_id', 'character_id');
     }
 
     public function characters(): \Illuminate\Database\Eloquent\Relations\HasManyThrough

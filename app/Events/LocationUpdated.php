@@ -12,6 +12,8 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use LaravelEveTools\EveSeeder\Models\Sde\SolarSystem;
 use LaravelEveTools\EveSeeder\Models\Sde\StaStation;
 
+
+//TODO: Remove
 class LocationUpdated implements ShouldBroadcast
 {
     public CharacterInfo $character;

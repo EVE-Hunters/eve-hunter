@@ -9,6 +9,10 @@ class SystemKills extends Model
 {
     use HasFactory;
 
+    protected $dates = [
+        'created_at' => 'YYYY-MM-DDTHH:mm:ss.sssZ'
+    ];
+
     protected $fillable = [
         'system_id',
         'npc_kills',
@@ -17,6 +21,6 @@ class SystemKills extends Model
     ];
 
     protected $hidden = [
-        'id', 'created_at', 'updated_at', 'system_id'
+        'updated_at'
     ];
 }

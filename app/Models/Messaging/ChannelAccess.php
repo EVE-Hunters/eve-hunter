@@ -11,7 +11,14 @@ class ChannelAccess extends Model
 
     protected $fillable = [
         'channel_id',
-        'entity_id',
+        'entity_type',
+        'entity_id'
     ];
+
+
+
+    public function accessable(){
+        return $this->morphTo('entity');
+    }
 
 }

@@ -26,6 +26,9 @@ class Kernel extends ConsoleKernel
 
         //Update characters
         $schedule->command('hunters:characters:update')->everySixHours();
+
+        //need a secured esi job to prevent tokens from invalidating
+        $schedule->command('hunters:characters:online')->hourly();
     }
 
     /**

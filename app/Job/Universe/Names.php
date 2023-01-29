@@ -10,6 +10,14 @@ use Illuminate\Contracts\Queue\ShouldBeUnique;
 
 class Names extends \LaravelEveTools\EveApi\Jobs\Universe\Names implements ShouldBeUnique
 {
+    protected $alliances = [];
+    protected $corporations = [];
+    public function __construct($alliances = [], $corporations = [])
+    {
+        $this->alliances = $alliances;
+        $this->corporations = $corporations;
+    }
+
     private $items_id_limit = 1000;
 
     public $tags = ['default'];
@@ -23,7 +31,7 @@ class Names extends \LaravelEveTools\EveApi\Jobs\Universe\Names implements Shoul
             ->get()
             ->pluck('entity_id');
 
-        $entity_ids = collect();
+        $entity_ids = collect(array_merge($this->corporations, $this->alliances));
 
         $entity_ids->push(CharacterInfo::select('corporation_id')
             ->whereNotNull('corporation_id')

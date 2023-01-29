@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+
 use App\Events\UserCreated;
 use App\Http\Controllers\Controller;
 use App\Job\Character\Character;
@@ -12,22 +13,16 @@ use Illuminate\Http\Request;
 use Laravel\Socialite\Contracts\Factory as Socialite;
 use Laravel\Socialite\Two\User as SocialiteUser;
 use Illuminate\Support\Str;
+use LaravelEveTools\EveApi\Jobs\Characters\Affiliation;
 
 class SSoController extends Controller
 {
-    protected $scopes = [
-        'publicData',
-        'esi-location.read_location.v1',
-        'esi-location.read_ship_type.v1',
-        'esi-location.read_online.v1',
-        'esi-ui.write_waypoint.v1'
-    ];
 
     public function redirect(Socialite $social)
     {
         session()->put('_redirect', request()->headers->get('referer'));
         return $social->driver('eveonline')
-            ->scopes($this->scopes)
+            ->scopes(config('eve-config.scopes', ['publicData']))
             ->redirect();
     }
 
@@ -35,7 +30,7 @@ class SSoController extends Controller
     {
 
         $eve_user = $social->driver('eveonline')
-            ->scopes($this->scopes)
+            ->scopes(config('eve-config.scopes', ['publicData']))
             ->user();
 
         //Find / Create User
@@ -91,7 +86,7 @@ class SSoController extends Controller
             'main_character_id' => $eve_user->id,
         ], [
             'name' => $eve_user->name,
-
+            'primary_hunter' => $eve_user->id
         ]);
 
         return $user;
@@ -142,7 +137,8 @@ class SSoController extends Controller
         ]);
 
         //Spawn any jobs required
-        Character::dispatch($eve_user->id);
+        //Character::dispatch($eve_user->id);
+        Affiliation::dispatch([$eve_user->id]);
     }
 
     public function loginUser(User $user): bool
@@ -150,4 +146,5 @@ class SSoController extends Controller
         auth()->login($user, true);
         return true;
     }
+
 }

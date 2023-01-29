@@ -9,20 +9,22 @@ use Carbon\Carbon;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 
 
-class BroadcastDestination implements ShouldBroadcast
+class BroadcastDestination implements ShouldBroadcastNow
 {
     public SolarSystem $system;
     public User $user;
 
-    public $queue='character';
+    public $queue = 'high';
 
     public function __construct(SolarSystem $system, User $user)
     {
         $this->system = $system;
         $this->user = $user;
     }
+
 
     public function broadcastAs(): string
     {
@@ -32,14 +34,14 @@ class BroadcastDestination implements ShouldBroadcast
     public function broadcastWith(): array
     {
         return [
-            'character' => $this->user->main_character,
-            'system' => $this->system,
+            'user' => $this->user->only(['id','name']),
+            'system' => $this->system->only(['system_id', 'name']),
             'datetime' => Carbon::now()->toDateTimeString()
         ];
     }
 
     public function broadcastOn(): PresenceChannel
     {
-        return new PresenceChannel('hunters.'.$this->user->active_channel);
+        return new PresenceChannel('hunters.'.auth()->user()->active_channel);
     }
 }
