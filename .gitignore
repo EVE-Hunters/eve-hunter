@@ -4,7 +4,7 @@
 /public/js
 /public/css
 /public/build
-/storagegi
+/storage
 /vendor
 .env
 .env.backup
