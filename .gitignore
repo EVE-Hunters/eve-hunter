@@ -4,10 +4,7 @@
 /public/js
 /public/css
 /public/build
-/storage/sde/
-/storage/logs/**/*.log
-/storage/**/*.php
-/storage/**/*.json
+/storage/**/*.*
 
 /vendor
 .env
