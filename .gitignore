@@ -4,7 +4,9 @@
 /public/js
 /public/css
 /public/build
-/storage/**/*.*
+/storage/.key
+/storage/**/*.log
+
 
 /vendor
 .env
@@ -18,3 +20,4 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+
