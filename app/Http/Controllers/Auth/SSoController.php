@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Events\UserCreated;
 use App\Http\Controllers\Controller;
+use App\Job\Character\Affiliation;
 use App\Job\Character\Character;
 use App\Models\Character\CharacterInfo;
 use App\Models\RefreshToken;
@@ -13,7 +14,6 @@ use Illuminate\Http\Request;
 use Laravel\Socialite\Contracts\Factory as Socialite;
 use Laravel\Socialite\Two\User as SocialiteUser;
 use Illuminate\Support\Str;
-use LaravelEveTools\EveApi\Jobs\Characters\Affiliation;
 
 class SSoController extends Controller
 {
