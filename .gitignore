@@ -4,7 +4,11 @@
 /public/js
 /public/css
 /public/build
-/storage
+/storage/sde/
+/storage/logs/**/*.log
+/storage/**/*.php
+/storage/**/*.json
+
 /vendor
 .env
 .env.backup
