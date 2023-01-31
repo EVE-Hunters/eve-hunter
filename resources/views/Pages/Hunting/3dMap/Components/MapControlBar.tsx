@@ -1,4 +1,5 @@
-import { Button } from '@mantine/core'
+import { Button, Menu } from '@mantine/core'
+import State from 'pusher-js/types/src/core/http/state'
 import React, { HTMLAttributes } from 'react'
 import { useHuntingStore, useMapStore } from '../../../../../scripts/Stores'
 import { MapStatisticTypes } from '../../../../../scripts/types'
@@ -56,19 +57,31 @@ const MapControlBar: React.FC<MapStatControlProps> = ({ ...props }) => {
       >
         Toggle Range Shere
       </Button>
-      <Button.Group>
-        {btnGroup.map((stat) => (
-          <Button
-            variant="subtle"
-            key={stat.type}
-            size="xs"
-            color={stat.type == activeStatistic ? 'green.6' : 'blue'}
-            onClick={() => setActiveStatistic(stat.type)}
-          >
-            {stat.label}
+      <Menu withinPortal>
+        <Menu.Target>
+          <Button size="xs">
+            System Stat (
+            {btnGroup.find((x) => x.type == activeStatistic)?.label})
           </Button>
-        ))}
-      </Button.Group>
+        </Menu.Target>
+        <Menu.Dropdown>
+          <Button.Group>
+            {btnGroup.map((stat) => (
+              <Button
+                variant="subtle"
+                component="button"
+                key={stat.type}
+                size="xs"
+                color={stat.type == activeStatistic ? 'green.6' : 'blue'}
+                onClick={() => setActiveStatistic(stat.type)}
+              >
+                {stat.label}
+              </Button>
+            ))}
+          </Button.Group>
+        </Menu.Dropdown>
+      </Menu>
+
       <Button
         disabled={returnSystemId == null}
         variant="subtle"

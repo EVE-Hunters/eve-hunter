@@ -12,7 +12,7 @@ import {
   Tooltip,
 } from '@mantine/core'
 import { IconBuildingLighthouse, IconSend, IconUsers } from '@tabler/icons'
-import React, { HTMLAttributes } from 'react'
+import React, { HTMLAttributes, useEffect, useRef } from 'react'
 import {
   useChannelStore,
   useHuntingStore,
@@ -32,6 +32,27 @@ interface ChatProps extends React.PropsWithChildren {
 
 const Chat: React.FC<ChatProps> = ({ ...props }) => {
   const members = useChannelStore((state) => state.members)
+
+  const chatRef = useRef<HTMLDivElement>(null)
+  const divRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleDomInserted = (event: Event) => {
+      if (chatRef.current) {
+        chatRef.current.scroll({
+          behavior: 'smooth',
+          top: chatRef.current.scrollHeight,
+        })
+      }
+    }
+
+    if (chatRef.current) {
+      chatRef.current.addEventListener('DOMNodeInserted', handleDomInserted)
+    }
+
+    return () =>
+      chatRef.current?.removeEventListener('DOMNodeInserted', handleDomInserted)
+  }, [])
 
   return (
     <Flex direction="column" sx={{ height: props.height }}>
@@ -57,20 +78,29 @@ const Chat: React.FC<ChatProps> = ({ ...props }) => {
         </Flex>
       </Box>
 
-      <Flex
+      <Box
+        ref={chatRef}
         sx={(theme) => ({
-          flexGrow: 1,
+          //flexGrow: 1,
           color: '',
           backgroundColor:
             theme.colorScheme == 'dark'
               ? theme.colors.gray[6]
               : theme.colors.gray[3],
+          overflow: 'hidden',
+          overflowY: 'scroll',
+          paddingTop: 10,
+          paddingRight: 10,
+          paddingBottom: 10,
+          marginBottom: 36,
+          height: '100%',
         })}
       >
         <Chatdisplay />
-      </Flex>
+      </Box>
 
       <ChatInput />
+      <div ref={divRef} />
     </Flex>
   )
 }

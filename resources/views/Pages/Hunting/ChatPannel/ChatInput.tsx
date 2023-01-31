@@ -23,7 +23,11 @@ const ChatInput: React.FC<ChatInputProps> = ({ ...props }) => {
   }
 
   return (
-    <form onSubmit={onSubmit}>
+    <Box
+      component="form"
+      onSubmit={onSubmit}
+      sx={{ position: 'absolute', bottom: 0, width: '100%' }}
+    >
       <TextInput
         radius="xs"
         max="255"
@@ -39,7 +43,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ ...props }) => {
           />
         }
       />
-    </form>
+    </Box>
   )
 }
 export default ChatInput

@@ -43,17 +43,11 @@ const PanelWrapper: React.FC<PanelWrapperProps> = ({ ...props }) => {
       >
         <Box sx={{ padding: 5 }}>
           <Grid sx={{}} align="flex-start" justify="flex-start">
-            {returnSystem && (
-              <Grid.Col span={3}>
-                <SystemPanel isReturn system={returnSystem!} />
-              </Grid.Col>
-            )}
+            {returnSystem && <SystemPanel isReturn system={returnSystem!} />}
             {systems
               .filter((x) => x.system_id != returnSystemId)
               .map((system) => (
-                <Grid.Col span={3} key={system.system_id}>
-                  <SystemPanel system={system} key={system.system_id} />
-                </Grid.Col>
+                <SystemPanel system={system} key={system.system_id} />
               ))}
           </Grid>
         </Box>

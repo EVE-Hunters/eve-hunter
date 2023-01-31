@@ -61,15 +61,25 @@ const Hunt: IntertiaPage<HuntProps> = ({ ...props }) => {
       </Portal>
       <Grid sx={{ height: '100%', margin: 0 }}>
         <Grid.Col span={5}>
-          <Map height={wrapperRef.current?.clientHeight ?? 700} />
+          <Map
+            height={
+              wrapperRef.current?.clientHeight
+                ? wrapperRef.current?.clientHeight - 50
+                : 700
+            }
+          />
         </Grid.Col>
         <Grid.Col span={7}>
           <Grid sx={{ height: '100%', margin: 0 }}>
             <Grid.Col span={8} sx={{ padding: 0 }}>
-              <Card shadow="md">
+              <Card shadow="md" sx={{ overflow: 'visible' }}>
                 <Card.Section>
                   <PanelWrapper
-                    height={wrapperRef.current?.clientHeight ?? 700}
+                    height={
+                      wrapperRef.current?.clientHeight
+                        ? wrapperRef.current?.clientHeight - 50
+                        : 700
+                    }
                   />
                 </Card.Section>
               </Card>
@@ -77,7 +87,13 @@ const Hunt: IntertiaPage<HuntProps> = ({ ...props }) => {
             <Grid.Col span={4} sx={{ paddingTop: 0 }}>
               <Card shadow="md">
                 <Card.Section>
-                  <Chat height={wrapperRef.current?.clientHeight ?? 700} />
+                  <Chat
+                    height={
+                      wrapperRef.current?.clientHeight
+                        ? wrapperRef.current?.clientHeight - 50
+                        : 700
+                    }
+                  />
                 </Card.Section>
               </Card>
             </Grid.Col>

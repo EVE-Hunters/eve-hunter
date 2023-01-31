@@ -1,6 +1,6 @@
 import { Page } from '@inertiajs/inertia'
 import { usePage } from '@inertiajs/inertia-react'
-import { Stack, Text } from '@mantine/core'
+import { Box, Stack, Text } from '@mantine/core'
 import React, { HTMLAttributes } from 'react'
 import {
   useApplicationState,
@@ -35,7 +35,8 @@ const Chatdisplay: React.FC<ChatdisplayProps> = ({ ...props }) => {
     )
 
   return (
-    <Stack spacing={0} sx={{ padding: 10, gap: 10, width: '100%' }}>
+    // <Box sx={{ paddingRight: 10, width: '100%' }}>
+    <>
       {displayMessages.map((message, index) => {
         if (message.type == 'Message') {
           return (
@@ -76,7 +77,7 @@ const Chatdisplay: React.FC<ChatdisplayProps> = ({ ...props }) => {
 
         return null
       })}
-    </Stack>
+    </>
   )
 }
 export default Chatdisplay

@@ -15,7 +15,7 @@ const PanelActions: React.FC<PanelActionsProps> = ({ system, ...props }) => {
   const hunters = useHuntingStore((state) => state.hunters)
   return (
     <Flex sx={{ marginTop: 10 }}>
-      <Tooltip label="Open Dotlan">
+      <Tooltip label="Open Dotlan" withinPortal>
         <ActionIcon
           component="a"
           target="_blank"
