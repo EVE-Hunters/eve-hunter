@@ -20,7 +20,10 @@ export type FlashMessage = {
   dismissable: boolean
 }
 
-export type AppMessage = {}
+export type AppMessage = {
+  type: 'success' | 'error'
+  message: string
+}
 
 export interface NavbarItemProps {
   icon: TablerIcon

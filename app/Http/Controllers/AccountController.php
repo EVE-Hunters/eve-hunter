@@ -104,7 +104,7 @@ class AccountController extends Controller
         }
 
         $character->delete();
-        $token->delete();
+        $token->forceDelete();
 
         return response()->json([
             'message' => "{$character->name} was Deleted"

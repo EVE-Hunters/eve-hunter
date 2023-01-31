@@ -32,8 +32,10 @@ Route::middleware(['web', 'auth'])->group(function () {
             Route::get('/esi/search/refresh', [EsiController::class, 'refreshSearchResults'])
                 ->name('esi.search.refresh');
 
-            Route::get('/characters', [AccountController::class, 'index'])
-                ->name('inertia.characters');
+            Route::group(['prefix' => 'characters'], function () {
+                Route::get('/', [AccountController::class, 'index'])
+                    ->name('inertia.characters');
+            });
 
             Route::get('/channels', [ChannelController::class, 'index'])
                 ->name('inertia.channels');
@@ -63,8 +65,12 @@ Route::middleware(['web', 'auth'])->group(function () {
 
                 Route::get('/create', [ChannelController::class, 'add'])
                     ->name('inertia.channel.create');
+
                 Route::post('create', [ChannelController::class, 'create'])
                     ->name('channel.create');
+
+                Route::delete('/{channel}', [ChannelController::class, 'delete'])
+                    ->name('inertia.channel.delete');
             }
             );
         }

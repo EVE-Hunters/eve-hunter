@@ -116,11 +116,10 @@ class ChannelController extends Controller
 
     public function delete(Channel $channel){
         DeleteChannel::run($channel);
-        return response()->json(['message' => 'Channel Deleted']);
+        return response()->json([
+            'message' => "Channel was deleted"
+        ]);
     }
 
-    // public function manage_access(Channel $channel, Request $request){
-    //     SyncChannelAccess::run($channel, $request->get('entities', []));
-    // }
 
 }
