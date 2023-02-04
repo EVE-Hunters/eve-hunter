@@ -1,13 +1,8 @@
-import { Box, Button, Portal } from '@mantine/core'
-import { useClickOutside } from '@mantine/hooks'
-import axios from 'axios'
-import React, { HTMLAttributes, useState } from 'react'
-import { route } from '../../scripts/helpers'
+import React from 'react'
+
 import { useApplicationState } from '../../scripts/Stores/ApplicationState'
 
-import { IntertiaPage, ScreenPosition } from '../../scripts/types'
-import AppWrapper from '../Layouts/AppWrapper'
-import SystemContextMenu from './Hunting/3dMap/Components/MapElements/SystemContextMenu'
+import { IntertiaPage } from '../../scripts/types'
 
 interface HomeProps extends React.PropsWithChildren<{}> {}
 

@@ -1,19 +1,28 @@
-import { defineConfig } from 'vite'
+import { defineConfig, splitVendorChunkPlugin } from 'vite'
 import react from '@vitejs/plugin-react'
-import laravel from 'laravel-vite-plugin';
+import laravel from 'laravel-vite-plugin'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    server: {
-        hmr: {
-            host: 'localhost'
-        }
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {},
+      },
     },
-    plugins: [
-        react(),
-        laravel({
-            input: ['resources/scripts/app.tsx'],
-            refresh: true,
-        }),
-    ]
+  },
+
+  server: {
+    hmr: {
+      host: 'localhost',
+    },
+  },
+  plugins: [
+    react(),
+    laravel({
+      input: ['resources/scripts/app.tsx'],
+      refresh: true,
+    }),
+    splitVendorChunkPlugin(),
+  ],
 })
